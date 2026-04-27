@@ -1,37 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import useIsMobile from '../hooks/useIsMobile';
 
 const TypographyHero = () => {
   const [hovered, setHovered] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useIsMobile(768);
 
   const words = [
-    { 
-      id: '1', letter: 'D', remainder: 'ERIVING', 
+    {
+      id: '1', letter: 'D', remainder: 'ERIVING',
       title: '01 // THE CONCEPT',
       desc: 'Formulating spatial narratives that respond to environment and human needs. We sculpt ideas into tangible footprints.',
       tags: ['CONCEPTUALIZATION', 'MASTER PLANNING', '3D VISUALIZATION'],
-      img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop'
     },
-    { 
-      id: '2', letter: 'A', remainder: 'RCHITECTURAL', 
+    {
+      id: '2', letter: 'A', remainder: 'RCHITECTURAL',
       title: '02 // THE STRUCTURE',
       desc: 'Engineering aesthetics. Bridging materials, light, and gravity to construct timeless monolithic forms.',
       tags: ['STRUCTURAL DESIGN', 'FACADE ENGINEERING', 'SPATIAL DYNAMICS'],
-      img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop'
     },
-    { 
-      id: '3', letter: 'D', remainder: 'IMENSIONS', 
+    {
+      id: '3', letter: 'D', remainder: 'IMENSIONS',
       title: '03 // THE EXECUTION',
       desc: 'Obsessive precision. Curating raw textures and refining every micro-interaction within the built space.',
       tags: ['INTERIOR CURATION', 'MATERIAL SELECTION', 'FURNITURE DESIGN'],
-      img: 'https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=600&auto=format&fit=crop'
     }
   ];
 

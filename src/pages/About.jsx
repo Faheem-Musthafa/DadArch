@@ -1,5 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import SEO from '../components/SEO';
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -19,16 +18,11 @@ const TextReveal = ({ children, delay = 0, fontSize, fontWeight, lineHeight, let
 
 const About = () => {
   const isMobile = useIsMobile(768);
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
 
   const disciplines = ['Architecture', 'Interior Design', 'Landscaping', 'Product Design', '3D Animation'];
 
   return (
-    <div ref={containerRef} style={{ backgroundColor: '#ffffff', color: '#000', overflowX: 'hidden' }}>
+    <div style={{ backgroundColor: '#ffffff', color: '#000', overflowX: 'hidden' }}>
       <SEO
         title="About — DAD Architects"
         description="Deriving Architectural Dimensions. Professional architects based in Calicut and Manjeri."
