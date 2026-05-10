@@ -127,7 +127,7 @@ const TypographyHero = () => {
           bottom: isMobile ? '5%' : '8%',
           width: '100%',
           padding: '0 5%',
-          display: 'flex',
+          display: isMobile ? 'none' : 'flex',
           justifyContent: 'center',
           zIndex: 2,
         }}

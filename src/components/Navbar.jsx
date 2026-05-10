@@ -1,8 +1,18 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="navbar">
+    <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
       <div className="navbar-left">
         <Link to="/" className="navbar-logo">
           <span className="navbar-logo-dad">DAD</span>
