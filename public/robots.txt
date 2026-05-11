@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# AI Crawlers - Explicitly allow to ensure visibility in AI answers (AEO)
+User-agent: ChatGPT-User
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: GPTBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Omgili
+Allow: /
+
+Sitemap: https://dadarchitects.com/sitemap.xml
