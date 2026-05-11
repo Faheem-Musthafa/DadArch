@@ -26,7 +26,7 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-taglines hide-mobile">
-        <span className="navbar-tagline">ARCHITECTURE  • INTERIOR DESIGN</span>
+        <span className="navbar-tagline">CLIMATE RESPONSIVE DESIGN</span>
       </div>
     </header>
   );

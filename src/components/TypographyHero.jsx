@@ -105,7 +105,7 @@ const TypographyHero = () => {
                   whiteSpace: 'nowrap',
                   display: 'inline-flex',
                   fontSize: isMobile ? 'clamp(2.5rem, 10vw, 4rem)' : 'clamp(3rem, 9vw, 10rem)',
-                  fontWeight: 800,
+                  fontWeight: 300,
                   letterSpacing: '-0.02em',
                   alignSelf: 'center',
                   textTransform: 'uppercase',

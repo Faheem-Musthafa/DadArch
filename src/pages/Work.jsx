@@ -4,37 +4,37 @@ import SEO from '../components/SEO';
 import useIsMobile from '../hooks/useIsMobile';
 
 const projects = [
-  { 
+  {
     id: '01', title: 'Niyas & Family', subtitle: 'Moodadi, Calicut — Residential', img: '/project/dad11.jpeg',
     desc: 'A serene residential space designed to balance natural light with robust materials. The home integrates into the lush landscape, offering sweeping views while maintaining profound privacy.',
     details: { area: '4,200 sqft', year: '2025', role: 'Architecture & Interiors' },
     gallery: ['/project/dad2.jpeg', '/project/dad4.jpeg', '/project/dad12.jpeg']
   },
-  { 
+  {
     id: '02', title: 'IM House', subtitle: 'Calicut — Residential', img: '/project/dad2.jpeg',
     desc: 'An exploration of monolithic forms. The IM House utilizes exposed concrete and brutalist elements softened by warm timber accents and expansive interior courtyards.',
     details: { area: '3,800 sqft', year: '2024', role: 'Architecture & Landscape' },
     gallery: ['/project/dad11.jpeg', '/project/dad4.jpeg', '/project/dad12.jpeg']
   },
-  { 
+  {
     id: '03', title: 'Anas & Family', subtitle: 'Manjeri — Residential', img: '/project/dad4.jpeg',
     desc: 'Rooted in tropical modernism, this residence features deep overhangs and cross-ventilation strategies to combat the local climate, creating a cool, breathable sanctuary.',
     details: { area: '5,100 sqft', year: '2023', role: 'Complete Design' },
     gallery: ['/project/dad11.jpeg', '/project/dad2.jpeg', '/project/dad12.jpeg']
   },
-  { 
+  {
     id: '04', title: 'Sathar & Family', subtitle: 'Koylandi — Residential', img: '/project/dad4.jpeg',
     desc: 'A minimalist retreat that prioritizes family interaction. The open-plan layout eliminates unnecessary walls, allowing life to flow seamlessly from indoor living to the outdoor deck.',
     details: { area: '2,900 sqft', year: '2024', role: 'Interior Architecture' },
     gallery: ['/project/dad11.jpeg', '/project/dad2.jpeg', '/project/dad12.jpeg']
   },
-  { 
+  {
     id: '05', title: 'Mafi House', subtitle: 'Peringathur — Residential', img: '/project/dad12.jpeg',
     desc: 'Characterized by its floating roof plane, Mafi House is a study in lightness. Glass walls completely dissolve the boundary between the living spaces and the central reflection pool.',
     details: { area: '6,000 sqft', year: '2025', role: 'Architecture' },
     gallery: ['/project/dad2.jpeg', '/project/dad4.jpeg', '/project/dad11.jpeg']
   },
-  { 
+  {
     id: '06', title: 'Ashraf Residence', subtitle: 'Calicut — Residential', img: '/project/dad11.jpeg',
     desc: 'An urban infill project that maximizes natural light on a tight plot. Skylights and vertical voids draw sunlight down through three stories of carefully curated interior spaces.',
     details: { area: '2,400 sqft', year: '2023', role: 'Architecture & Interiors' },
@@ -44,7 +44,7 @@ const projects = [
 
 const getGridSpan = (index, isMobile) => {
   if (isMobile) return { gridColumn: 'span 1', gridRow: 'span 1' };
-  
+
   const pattern = index % 6;
   switch (pattern) {
     case 0: return { gridColumn: 'span 2', gridRow: 'span 2' }; // 2x2 Large
@@ -90,7 +90,7 @@ const Work = () => {
         description="A curated archive of spaces designed with absolute intention."
         url="/work"
       />
-      
+
       {/* HERO */}
       <section style={{ padding: isMobile ? '20vh 5% 10vh' : '25vh 5% 10vh' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
@@ -98,9 +98,6 @@ const Work = () => {
             <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#999', display: 'block', marginBottom: '1.5rem' }}>
               Archive
             </span>
-            <h1 style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 0.9, textTransform: 'uppercase', margin: 0 }}>
-              Selected<br />Works
-            </h1>
           </FadeIn>
           <FadeIn delay={0.2}>
             <p style={{ fontSize: '1.2rem', lineHeight: 1.6, color: '#555', marginTop: '3rem', maxWidth: '600px', fontWeight: 400 }}>
@@ -111,17 +108,17 @@ const Work = () => {
       </section>
 
       {/* BENTO GRID PORTFOLIO */}
-      <section style={{ padding: '0 5% 15vh' }}>
-        <div style={{ 
-          maxWidth: '1400px', 
+      <section style={{ padding: '0 5% 35vh' }}>
+        <div style={{
+          maxWidth: '1400px',
           margin: '0 auto',
-          display: 'grid', 
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', 
-          gridAutoRows: isMobile ? '60vh' : '450px',
+          display: 'grid',
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+          gridAutoRows: isMobile ? '65vw' : '450px',
           gap: '1rem'
         }}>
           {projects.map((p, i) => (
-            <motion.div 
+            <motion.div
               key={p.id}
               layoutId={`card-container-${p.id}`}
               initial={{ opacity: 0, y: 30 }}
@@ -147,30 +144,32 @@ const Work = () => {
                 alt={p.title}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }}
               />
-              
+
               {/* Gradient Overlay */}
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)', opacity: 0.8 }} />
-              
-              <motion.div 
-                variants={{ hover: { y: -10 } }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-                style={{ position: 'absolute', bottom: '2.5rem', left: '2.5rem', right: '2.5rem', color: '#fff' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                  <motion.div layoutId={`title-container-${p.id}`}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#ccc', display: 'block', marginBottom: '0.5rem' }}>
-                      {p.id} — {p.details.year}
-                    </span>
-                    <motion.h2 
-                      layoutId={`title-${p.id}`}
-                      style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 600, margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase', lineHeight: 1.1 }}
-                    >
-                      {p.title}
-                    </motion.h2>
-                  </motion.div>
-                  
-                  {!isMobile && (
-                    <motion.div 
+              {!isMobile && (
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)', opacity: 0.8 }} />
+              )}
+
+              {!isMobile && (
+                <motion.div
+                  variants={{ hover: { y: -10 } }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  style={{ position: 'absolute', bottom: '2.5rem', left: '2.5rem', right: '2.5rem', color: '#fff' }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                    <motion.div layoutId={`title-container-${p.id}`}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#ccc', display: 'block', marginBottom: '0.5rem' }}>
+                        {p.id} — {p.details.year}
+                      </span>
+                      <motion.h2
+                        layoutId={`title-${p.id}`}
+                        style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 600, margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase', lineHeight: 1.1 }}
+                      >
+                        {p.title}
+                      </motion.h2>
+                    </motion.div>
+
+                    <motion.div
                       variants={{ hover: { x: 5, opacity: 1 } }}
                       initial={{ opacity: 0 }}
                       style={{ border: '1px solid rgba(255,255,255,0.3)', borderRadius: '50%', padding: '0.8rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -180,9 +179,9 @@ const Work = () => {
                         <polyline points="12 5 19 12 12 19"></polyline>
                       </svg>
                     </motion.div>
-                  )}
-                </div>
-              </motion.div>
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
           ))}
         </div>
@@ -234,13 +233,13 @@ const Work = () => {
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 50%)' }} />
-              
+
               <div style={{ position: 'absolute', bottom: '10vh', left: '5%', right: '5%', maxWidth: '1400px', margin: '0 auto', color: '#fff' }}>
                 <motion.div layoutId={`title-container-${selectedProject.id}`}>
                   <span style={{ fontSize: '1rem', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#aaa', display: 'block', marginBottom: '1rem' }}>
                     {selectedProject.id} — {selectedProject.subtitle}
                   </span>
-                  <motion.h2 
+                  <motion.h2
                     layoutId={`title-${selectedProject.id}`}
                     style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', fontWeight: 800, margin: 0, letterSpacing: '-0.03em', lineHeight: 1, textTransform: 'uppercase' }}
                   >
@@ -254,7 +253,7 @@ const Work = () => {
             <div style={{ padding: isMobile ? '10vh 5%' : '15vh 5%' }}>
               <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr', gap: isMobile ? '4rem' : '8rem', marginBottom: '15vh' }}>
-                  
+
                   {/* Stats Sidebar */}
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -293,7 +292,7 @@ const Work = () => {
                 </div>
 
                 {/* ASYMMETRICAL GALLERY */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
@@ -307,13 +306,13 @@ const Work = () => {
                       else if (idx === 1) gridColumn = '9 / -1'; // Tall right
                       else if (idx === 2) gridColumn = '3 / 11'; // Centered wide
                     }
-                    
+
                     return (
-                      <div 
-                        key={idx} 
-                        style={{ 
+                      <div
+                        key={idx}
+                        style={{
                           gridColumn,
-                          aspectRatio: isMobile ? '4/3' : (idx === 1 ? '3/4' : '16/9'), 
+                          aspectRatio: isMobile ? '4/3' : (idx === 1 ? '3/4' : '16/9'),
                           borderRadius: '1rem',
                           overflow: 'hidden',
                           backgroundColor: '#f5f5f5'
@@ -324,7 +323,7 @@ const Work = () => {
                     );
                   })}
                 </motion.div>
-                
+
                 <div style={{ textAlign: 'center', margin: '15vh 0 5vh 0' }}>
                   <span style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#ccc' }}>
                     End of Project
