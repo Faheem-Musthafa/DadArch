@@ -1,6 +1,16 @@
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import SEO from '../components/SEO';
 import useIsMobile from '../hooks/useIsMobile';
+import posts from '../data/posts';
+import founders from '../data/founders';
+import about from '../data/about';
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const FadeIn = ({ children, delay = 0 }) => (
   <motion.div
@@ -25,9 +35,44 @@ const LineReveal = () => (
 
 const About = () => {
   const isMobile = useIsMobile(768);
+  const rootRef = useRef(null);
+
+  useGSAP(() => {
+    if (isMobile) return;
+
+    gsap.fromTo(
+      '.about-hero h1',
+      { letterSpacing: '-0.04em', opacity: 0.6 },
+      {
+        letterSpacing: '0em',
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.about-hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      }
+    );
+
+    gsap.utils.toArray('.about-reveal').forEach((el) => {
+      gsap.from(el, {
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+    });
+  }, { scope: rootRef, dependencies: [isMobile] });
 
   return (
-    <div style={{ backgroundColor: '#ffffff', color: '#000000', overflowX: 'hidden' }}>
+    <div ref={rootRef} style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', overflowX: 'hidden' }}>
       <SEO
         title="About — DAD Architects"
         description="A premium architecture and design studio based in Calicut and Manjeri."
@@ -35,20 +80,20 @@ const About = () => {
       />
 
       <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '0 5%' }}>
-        
+
         {/* HERO SECTION */}
-        <section style={{ height: '85vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
+        <section className="about-hero" style={{ height: '85vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
           <FadeIn>
-            <h1 style={{ 
-              fontSize: 'clamp(3.5rem, 10vw, 9rem)', 
-              fontWeight: 300, 
-              lineHeight: 0.85, 
+            <h1 style={{
+              fontSize: 'clamp(3.5rem, 10vw, 9rem)',
+              fontWeight: 300,
+              lineHeight: 0.85,
               letterSpacing: '-0.02em',
-              margin: 0, 
-              textTransform: 'uppercase' 
+              margin: 0,
+              textTransform: 'uppercase'
             }}>
-              DAD Architects<br/>
-              <span style={{ fontWeight: 600 }}>Space, Light & Material.</span>
+              {about.heroTitle}<br />
+              <span style={{ fontWeight: 600 }}>{about.heroSubtitle}</span>
             </h1>
           </FadeIn>
         </section>
@@ -64,28 +109,28 @@ const About = () => {
                 </span>
               </FadeIn>
             </div>
-            
+
             <div style={{ gridColumn: isMobile ? '1' : '5 / 11' }}>
               <FadeIn delay={0.1}>
-                <p style={{ 
-                  fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', 
-                  fontWeight: 400, 
-                  lineHeight: 1.3, 
+                <p style={{
+                  fontSize: 'clamp(1.5rem, 1vw, 2.5rem)',
+                  fontWeight: 400,
+                  lineHeight: 1.3,
                   margin: '0 0 4rem 0',
                   letterSpacing: '-0.01em'
                 }}>
-                  Based in Calicut and Manjeri, our practice is rooted in a profound respect for context, climate, and the people who inhabit our spaces. We believe architecture should not be loud or intrusive; rather, it should gently accommodate life.
+                  {about.studioParagraph}
                 </p>
               </FadeIn>
-              
+
               <FadeIn delay={0.2}>
                 <div style={{ width: '100%', overflow: 'hidden' }}>
-                  <motion.img 
+                  <motion.img
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1600" 
-                    alt="Studio Interior" 
-                    style={{ width: '100%', aspectRatio: isMobile ? '4/3' : '16/9', objectFit: 'cover', filter: 'grayscale(100%)' }} 
+                    src={about.studioImage}
+                    alt="Studio Interior"
+                    style={{ width: '100%', aspectRatio: isMobile ? '4/3' : '16/9', objectFit: 'cover', filter: 'grayscale(100%)' }}
                   />
                 </div>
               </FadeIn>
@@ -93,89 +138,138 @@ const About = () => {
           </div>
         </section>
 
-        {/* EXPERTISE SECTION */}
-        <section style={{ paddingTop: '10vh', paddingBottom: '15vh' }}>
+        {/* LEADERSHIP / FOUNDERS */}
+        <section style={{ paddingBottom: '15vh' }}>
           <LineReveal />
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(12, 1fr)', gap: '2rem', marginTop: '3rem' }}>
             <div style={{ gridColumn: isMobile ? '1' : '1 / 4' }}>
               <FadeIn>
                 <span style={{ fontSize: '1.1rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em' }}>
-                  Expertise
+                  Founders
                 </span>
               </FadeIn>
             </div>
-            
+
             <div style={{ gridColumn: isMobile ? '1' : '5 / 13' }}>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column' }}>
-                {['Architecture', 'Interior Design', 'Master Planning', 'Landscaping', 'Product Design'].map((item, i) => (
-                  <motion.li 
-                    key={i} 
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ 
-                      fontSize: 'clamp(2.5rem, 6vw, 5rem)', 
-                      fontWeight: 600, 
-                      textTransform: 'uppercase', 
-                      borderBottom: i !== 4 ? '1px solid #eaeaea' : 'none', 
-                      padding: '2rem 0',
-                      letterSpacing: '-0.02em',
-                      lineHeight: 1
-                    }}
-                  >
-                    {item}
-                  </motion.li>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: '2rem' }}>
+                {founders.map((f, i) => (
+                  <FadeIn key={`${f.order}-${f.name || i}`} delay={0.1 * (i + 1)}>
+                    <div style={{ overflow: 'hidden', marginBottom: '1rem' }}>
+                      <motion.img
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        src={f.image}
+                        alt={f.name}
+                        style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', filter: 'grayscale(100%)' }}
+                      />
+                    </div>
+                    <h3 style={{ fontSize: '1.5rem', fontWeight: 500, margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>{f.name}</h3>
+                    <p style={{ margin: 0, color: 'var(--text-secondary)' }}>{f.role}</p>
+                  </FadeIn>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* THE COLLECTIVE SECTION */}
-        <section style={{ paddingTop: '10vh', paddingBottom: '20vh' }}>
+        {/* JOURNAL PREVIEW */}
+
+
+        {/* TEAM GROUP PHOTO */}
+        <section style={{ paddingBottom: '15vh' }}>
           <LineReveal />
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(12, 1fr)', gap: '2rem', marginTop: '3rem' }}>
             <div style={{ gridColumn: isMobile ? '1' : '1 / 4' }}>
               <FadeIn>
                 <span style={{ fontSize: '1.1rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em' }}>
-                  The Team
+                  Our Team
                 </span>
               </FadeIn>
             </div>
-            
+
             <div style={{ gridColumn: isMobile ? '1' : '5 / 13' }}>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {[
-                  { name: 'Niyas', position: 'Principal Architect' },
-                  { name: 'Anas', position: 'Lead Designer' },
-                  { name: 'Sathar', position: 'Senior Engineer' },
-                  { name: 'Mafi', position: 'Interior Architect' },
-                  { name: 'Ashraf', position: 'Project Manager' },
-                ].map((member, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ 
-                      display: 'flex', 
-                      justifyContent: 'space-between', 
-                      alignItems: 'baseline', 
-                      borderBottom: '1px solid #eaeaea', 
-                      padding: '1.5rem 0' 
-                    }}
-                  >
-                    <span style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '-0.01em', color: '#000' }}>
-                      {member.name}
-                    </span>
-                    <span style={{ fontSize: 'clamp(0.85rem, 2vw, 1.1rem)', fontWeight: 500, textTransform: 'uppercase', color: '#888', letterSpacing: '0.05em', textAlign: 'right' }}>
-                      {member.position}
-                    </span>
-                  </motion.div>
+              <FadeIn delay={0.1}>
+                <div style={{ width: '100%', overflow: 'hidden' }}>
+                  <motion.img
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    src={about.groupPhoto}
+                    alt="Team group photo"
+                    style={{ width: '100%', aspectRatio: isMobile ? '4/3' : '21/9', objectFit: 'cover', filter: 'grayscale(100%)' }}
+                  />
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        <section style={{ paddingBottom: '15vh' }}>
+          <LineReveal />
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(12, 1fr)', gap: '2rem', marginTop: '3rem' }}>
+            <div style={{ gridColumn: isMobile ? '1' : '1 / 4' }}>
+              <FadeIn>
+                <span style={{ fontSize: '1.1rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em' }}>
+                  From the Journal
+                </span>
+              </FadeIn>
+            </div>
+
+            <div style={{ gridColumn: isMobile ? '1' : '5 / 13' }}>
+              <FadeIn delay={0.1}>
+                <p style={{ fontSize: 'clamp(1.1rem, 1.4vw, 1.4rem)', lineHeight: 1.55, color: 'var(--text-secondary)', margin: '0 0 3rem 0', maxWidth: '52ch' }}>
+                  Field notes, material studies, and observations on the practice of building in Kerala.
+                </p>
+              </FadeIn>
+
+              <div style={{ display: 'flex', flexDirection: 'column', borderTop: '1px solid var(--border)' }}>
+                {posts.slice(0, 3).map((post, idx) => (
+                  <FadeIn key={post.slug} delay={0.15 + idx * 0.08}>
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: isMobile ? '1fr' : '120px 1fr auto',
+                        gap: isMobile ? '0.75rem' : '3rem',
+                        padding: '2rem 0',
+                        borderBottom: '1px solid var(--border)',
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        alignItems: 'baseline',
+                      }}
+                    >
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '0.1em', color: 'var(--text-secondary)', textTransform: 'uppercase' }}>
+                        {new Date(post.date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).toUpperCase()}
+                      </span>
+                      <h3 style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', fontWeight: 600, margin: 0, letterSpacing: '-0.01em', textTransform: 'uppercase' }}>
+                        {post.title}
+                      </h3>
+                      <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
+                        Read →
+                      </span>
+                    </Link>
+                  </FadeIn>
                 ))}
               </div>
+
+              <FadeIn delay={0.4}>
+                <Link
+                  to="/blog"
+                  style={{
+                    display: 'inline-block',
+                    marginTop: '3rem',
+                    padding: '1rem 1.5rem',
+                    border: '1px solid var(--text-primary)',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: 'var(--text-primary)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  All Entries →
+                </Link>
+              </FadeIn>
             </div>
           </div>
         </section>
@@ -183,23 +277,23 @@ const About = () => {
       </div>
       {/* MASSIVE FOOTER / CTA */}
       <section style={{ borderTop: '1px solid #000', backgroundColor: '#fff', color: '#000', overflow: 'hidden' }}>
-        <motion.a 
-          href="/contact" 
+        <motion.a
+          href="/contact"
           style={{ textDecoration: 'none', color: 'inherit', display: 'block', padding: '10vh 5%' }}
           whileHover="hover"
         >
           <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between' }}>
             <div style={{ overflow: 'hidden' }}>
-              <motion.h2 
+              <motion.h2
                 variants={{ hover: { x: 30 } }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 style={{ fontSize: 'clamp(4rem, 12vw, 14rem)', fontWeight: 800, textTransform: 'uppercase', margin: 0, lineHeight: 0.85, letterSpacing: '-0.03em' }}
               >
-                Start A<br/>Project
+                Start A<br />Project
               </motion.h2>
             </div>
-            
-            <motion.div 
+
+            <motion.div
               variants={{ hover: { x: 30, scale: 1.1 } }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               style={{ marginTop: isMobile ? '3rem' : 0, paddingRight: isMobile ? 0 : '5%' }}

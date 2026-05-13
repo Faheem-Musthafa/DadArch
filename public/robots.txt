@@ -16,3 +16,6 @@ User-agent: Omgili
 Allow: /
 
 Sitemap: https://dadarchitects.com/sitemap.xml
+
+# AI-readable site summary
+# https://dadarchitects.com/llms.txt

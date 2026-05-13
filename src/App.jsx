@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -7,6 +7,13 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Work from './pages/Work';
 import './index.css';
+
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+
+const RouteFallback = () => (
+  <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-primary)' }} aria-hidden="true" />
+);
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -17,6 +24,22 @@ const AnimatedRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/work" element={<Work />} />
+        <Route
+          path="/blog"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <Blog />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/blog/:slug"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <BlogPost />
+            </Suspense>
+          }
+        />
       </Routes>
     </AnimatePresence>
   );

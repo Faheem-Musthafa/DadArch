@@ -1,46 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import SEO from '../components/SEO';
 import useIsMobile from '../hooks/useIsMobile';
+import projects from '../data/projects';
 
-const projects = [
-  {
-    id: '01', title: 'Niyas & Family', subtitle: 'Moodadi, Calicut — Residential', img: '/project/dad11.jpeg',
-    desc: 'A serene residential space designed to balance natural light with robust materials. The home integrates into the lush landscape, offering sweeping views while maintaining profound privacy.',
-    details: { area: '4,200 sqft', year: '2025', role: 'Architecture & Interiors' },
-    gallery: ['/project/dad2.jpeg', '/project/dad4.jpeg', '/project/dad12.jpeg']
-  },
-  {
-    id: '02', title: 'IM House', subtitle: 'Calicut — Residential', img: '/project/dad2.jpeg',
-    desc: 'An exploration of monolithic forms. The IM House utilizes exposed concrete and brutalist elements softened by warm timber accents and expansive interior courtyards.',
-    details: { area: '3,800 sqft', year: '2024', role: 'Architecture & Landscape' },
-    gallery: ['/project/dad11.jpeg', '/project/dad4.jpeg', '/project/dad12.jpeg']
-  },
-  {
-    id: '03', title: 'Anas & Family', subtitle: 'Manjeri — Residential', img: '/project/dad4.jpeg',
-    desc: 'Rooted in tropical modernism, this residence features deep overhangs and cross-ventilation strategies to combat the local climate, creating a cool, breathable sanctuary.',
-    details: { area: '5,100 sqft', year: '2023', role: 'Complete Design' },
-    gallery: ['/project/dad11.jpeg', '/project/dad2.jpeg', '/project/dad12.jpeg']
-  },
-  {
-    id: '04', title: 'Sathar & Family', subtitle: 'Koylandi — Residential', img: '/project/dad4.jpeg',
-    desc: 'A minimalist retreat that prioritizes family interaction. The open-plan layout eliminates unnecessary walls, allowing life to flow seamlessly from indoor living to the outdoor deck.',
-    details: { area: '2,900 sqft', year: '2024', role: 'Interior Architecture' },
-    gallery: ['/project/dad11.jpeg', '/project/dad2.jpeg', '/project/dad12.jpeg']
-  },
-  {
-    id: '05', title: 'Mafi House', subtitle: 'Peringathur — Residential', img: '/project/dad12.jpeg',
-    desc: 'Characterized by its floating roof plane, Mafi House is a study in lightness. Glass walls completely dissolve the boundary between the living spaces and the central reflection pool.',
-    details: { area: '6,000 sqft', year: '2025', role: 'Architecture' },
-    gallery: ['/project/dad2.jpeg', '/project/dad4.jpeg', '/project/dad11.jpeg']
-  },
-  {
-    id: '06', title: 'Ashraf Residence', subtitle: 'Calicut — Residential', img: '/project/dad11.jpeg',
-    desc: 'An urban infill project that maximizes natural light on a tight plot. Skylights and vertical voids draw sunlight down through three stories of carefully curated interior spaces.',
-    details: { area: '2,400 sqft', year: '2023', role: 'Architecture & Interiors' },
-    gallery: ['/project/dad12.jpeg', '/project/dad2.jpeg', '/project/dad4.jpeg']
-  },
-];
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const getGridSpan = (index, isMobile) => {
   if (isMobile) return { gridColumn: 'span 1', gridRow: 'span 1' };
@@ -71,12 +38,27 @@ const FadeIn = ({ children, delay = 0 }) => (
 const Work = () => {
   const isMobile = useIsMobile(768);
   const [selectedId, setSelectedId] = useState(null);
+  const rootRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.set('.work-card', { opacity: 0 });
+
+    ScrollTrigger.batch('.work-card', {
+      start: 'top bottom-=80',
+      once: true,
+      onEnter: (els) => gsap.to(els, { opacity: 1, duration: 1.1, stagger: 0.08, ease: 'power3.out', overwrite: 'auto' }),
+    });
+
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  }, { scope: rootRef, dependencies: [isMobile] });
 
   useEffect(() => {
     if (selectedId) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
+      gsap.set('.work-card', { opacity: 1 });
+      requestAnimationFrame(() => ScrollTrigger.refresh());
     }
     return () => { document.body.style.overflow = 'auto'; };
   }, [selectedId]);
@@ -84,7 +66,7 @@ const Work = () => {
   const selectedProject = projects.find(p => p.id === selectedId);
 
   return (
-    <div style={{ backgroundColor: '#ffffff', color: '#050505', minHeight: '100vh', width: '100vw', overflowX: 'hidden' }}>
+    <div ref={rootRef} style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', minHeight: '100vh', width: '100vw', overflowX: 'hidden' }}>
       <SEO
         title="Works — DAD Architects"
         description="A curated archive of spaces designed with absolute intention."
@@ -92,46 +74,33 @@ const Work = () => {
       />
 
       {/* HERO */}
-      <section style={{ padding: isMobile ? '20vh 5% 10vh' : '25vh 5% 10vh' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <FadeIn>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#999', display: 'block', marginBottom: '1.5rem' }}>
-              Archive
-            </span>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p style={{ fontSize: '1.2rem', lineHeight: 1.6, color: '#555', marginTop: '3rem', maxWidth: '600px', fontWeight: 400 }}>
-              An exploration of form, light, and material. Every project is a unique response to its context and its inhabitants, stripped of the unnecessary to reveal pure architectural truth.
-            </p>
-          </FadeIn>
-        </div>
+      <section style={{ padding: isMobile ? '10vh 5% ' : '10vh 5% 10vh' }}>
       </section>
 
       {/* BENTO GRID PORTFOLIO */}
       <section style={{ padding: '0 5% 35vh' }}>
         <div style={{
-          maxWidth: '1400px',
+          maxWidth: '1600px',
           margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
           gridAutoRows: isMobile ? '65vw' : '450px',
-          gap: '1rem'
+          gridAutoFlow: 'dense',
+          gap: '1px',
+          backgroundColor: '#eaeaea',
+          border: '1px solid #eaeaea'
         }}>
           {projects.map((p, i) => (
             <motion.div
               key={p.id}
+              className="work-card"
               layoutId={`card-container-${p.id}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: (i % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
               style={{
                 ...getGridSpan(i, isMobile),
                 position: 'relative',
                 cursor: 'pointer',
                 overflow: 'hidden',
-                borderRadius: '1rem',
-                backgroundColor: '#f5f5f5'
+                backgroundColor: '#fff'
               }}
               whileHover="hover"
               onClick={() => setSelectedId(p.id)}
@@ -147,7 +116,7 @@ const Work = () => {
 
               {/* Gradient Overlay */}
               {!isMobile && (
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)', opacity: 0.8 }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,17,17,0.55)', opacity: 0.85, transition: 'opacity 0.5s ease' }} />
               )}
 
               {!isMobile && (
@@ -232,13 +201,10 @@ const Work = () => {
                 alt={selectedProject.title}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 50%)' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,17,17,0.55)' }} />
 
               <div style={{ position: 'absolute', bottom: '10vh', left: '5%', right: '5%', maxWidth: '1400px', margin: '0 auto', color: '#fff' }}>
                 <motion.div layoutId={`title-container-${selectedProject.id}`}>
-                  <span style={{ fontSize: '1rem', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#aaa', display: 'block', marginBottom: '1rem' }}>
-                    {selectedProject.id} — {selectedProject.subtitle}
-                  </span>
                   <motion.h2
                     layoutId={`title-${selectedProject.id}`}
                     style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', fontWeight: 800, margin: 0, letterSpacing: '-0.03em', lineHeight: 1, textTransform: 'uppercase' }}
@@ -267,8 +233,8 @@ const Work = () => {
                       </div>
                       <div style={{ height: '1px', backgroundColor: '#eaeaea' }} />
                       <div>
-                        <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.5rem' }}>Year</span>
-                        <span style={{ fontSize: '1.2rem', fontWeight: 600, color: '#111', textTransform: 'uppercase' }}>{selectedProject.details.year}</span>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.5rem' }}>Place</span>
+                        <span style={{ fontSize: '1.2rem', fontWeight: 600, color: '#111', textTransform: 'uppercase' }}>{selectedProject.subtitle}</span>
                       </div>
                       <div style={{ height: '1px', backgroundColor: '#eaeaea' }} />
                       <div>
@@ -298,7 +264,8 @@ const Work = () => {
                   transition={{ duration: 0.8, delay: 0.5 }}
                   style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(12, 1fr)', gap: '1rem' }}
                 >
-                  {selectedProject.gallery.map((imgUrl, idx) => {
+                  {selectedProject.gallery.map((imgRaw, idx) => {
+                    const imgUrl = typeof imgRaw === 'string' ? imgRaw : (imgRaw?.image || '');
                     // Create an asymmetrical layout for gallery images
                     let gridColumn = 'span 12';
                     if (!isMobile) {
@@ -309,11 +276,10 @@ const Work = () => {
 
                     return (
                       <div
-                        key={idx}
+                        key={`${idx}-${imgUrl}`}
                         style={{
                           gridColumn,
                           aspectRatio: isMobile ? '4/3' : (idx === 1 ? '3/4' : '16/9'),
-                          borderRadius: '1rem',
                           overflow: 'hidden',
                           backgroundColor: '#f5f5f5'
                         }}
@@ -324,7 +290,31 @@ const Work = () => {
                   })}
                 </motion.div>
 
-                <div style={{ textAlign: 'center', margin: '15vh 0 5vh 0' }}>
+                <div style={{ textAlign: 'center', margin: '15vh 0 5vh 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem' }}>
+                  <motion.a 
+                    href="/contact"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      padding: '1.5rem 3rem',
+                      backgroundColor: '#000',
+                      color: '#fff',
+                      textDecoration: 'none',
+                      textTransform: 'uppercase',
+                      fontWeight: 600,
+                      letterSpacing: '0.1em',
+                      fontSize: '1.2rem',
+                    }}
+                  >
+                    Start A Project
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </motion.a>
                   <span style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#ccc' }}>
                     End of Project
                   </span>

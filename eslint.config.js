@@ -26,4 +26,10 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]|motion' }],
     },
   },
+  {
+    files: ['api/**/*.js', 'middleware.js'],
+    languageOptions: {
+      globals: { ...globals.node, atob: 'readonly', fetch: 'readonly', Response: 'readonly', TextEncoder: 'readonly' },
+    },
+  },
 ])

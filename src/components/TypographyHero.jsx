@@ -1,6 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Phone, ChatCircle } from '@phosphor-icons/react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import useIsMobile from '../hooks/useIsMobile';
+
+gsap.registerPlugin(useGSAP);
 
 const WORDS = [
   {
@@ -53,6 +58,13 @@ const TypographyHero = () => {
   const [active, setActive] = useState(null);
   const isMobile = useIsMobile(768);
   const activeWord = WORDS.find((w) => w.id === active);
+  const heroRef = useRef(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    tl.from('.hero-letter', { y: 80, opacity: 0, duration: 1.2, stagger: 0.1 })
+      .from('.hero-meta', { opacity: 0, y: 12, duration: 0.8 }, '-=0.6');
+  }, { scope: heroRef });
 
   const headingStyle = {
     position: 'relative',
@@ -70,15 +82,15 @@ const TypographyHero = () => {
   };
 
   return (
-    <section style={sectionStyle}>
-      <h1 style={headingStyle}>
+    <section ref={heroRef} style={sectionStyle}>
+      <h1 style={headingStyle} className="hero-letter-wrap">
         {WORDS.map((w) => {
           const isActive = active === w.id;
-          const dimmed = active && !isActive;
           return (
             <motion.button
               key={w.id}
               type="button"
+              className="hero-letter"
               onClick={() => setActive((curr) => (curr === w.id ? null : w.id))}
               onMouseEnter={isMobile ? undefined : () => setActive(w.id)}
               onMouseLeave={isMobile ? undefined : () => setActive(null)}
@@ -88,7 +100,7 @@ const TypographyHero = () => {
                 ...BUTTON_RESET,
                 display: 'flex',
                 alignItems: 'center',
-                color: dimmed ? 'var(--text-secondary)' : 'var(--text-primary)',
+                color: 'var(--text-primary)',
                 transition: 'color 0.4s ease',
               }}
             >
@@ -109,6 +121,7 @@ const TypographyHero = () => {
                   letterSpacing: '-0.02em',
                   alignSelf: 'center',
                   textTransform: 'uppercase',
+                  color: 'var(--text-secondary)',
                 }}
               >
                 <span style={{ paddingLeft: 0, paddingRight: 0, transform: 'scaleY(1.15)', display: 'inline-block' }}>
@@ -122,6 +135,7 @@ const TypographyHero = () => {
 
       <div
         id={PANEL_ID}
+        className="hero-meta"
         style={{
           position: 'absolute',
           bottom: isMobile ? '5%' : '8%',
@@ -187,6 +201,63 @@ const TypographyHero = () => {
           )}
         </AnimatePresence>
       </div>
+
+      {isMobile && (
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          style={{
+            position: 'absolute',
+            bottom: '5%',
+            right: '5%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+            zIndex: 10,
+          }}
+        >
+          <a 
+            href="https://wa.me/919995881828"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '50px',
+              height: '50px',
+              backgroundColor: 'var(--text-primary)',
+              color: 'var(--bg-primary)',
+              borderRadius: '50%',
+              textDecoration: 'none',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            }}
+          >
+            <ChatCircle size={22} weight="fill" />
+          </a>
+          <a 
+            href="tel:+919995881828"
+            aria-label="Call"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '50px',
+              height: '50px',
+              backgroundColor: 'var(--bg-primary)',
+              color: 'var(--text-primary)',
+              border: '1.5px solid var(--text-primary)',
+              borderRadius: '50%',
+              textDecoration: 'none',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            }}
+          >
+            <Phone size={22} weight="fill" />
+          </a>
+        </motion.div>
+      )}
     </section>
   );
 };

@@ -1,0 +1,34 @@
+# DAD Architects
+
+> Premium architecture and design studio based in Calicut and Manjeri, Kerala. Specializing in architecture, interior design, master planning, and landscaping.
+
+## About
+
+DAD Architects is a Kerala-based architecture firm with offices in Calicut and Manjeri. The practice is rooted in respect for context, climate, and the people who inhabit our spaces. We design across architecture, interior design, product design, and landscaping.
+
+## Locations
+
+- **Calicut**: Door No: 1720, 7th Floor, HiLite Business Park, Phase 1, Calicut, Kerala 673014, India
+- **Manjeri**: Door No: 3/101, City Point Mall, Manjeri, Kerala, India
+- **Phone**: +91 99958 81828
+
+## Services
+
+- Architecture
+- Interior Design
+- Master Planning
+- Landscaping
+- Product Design
+
+## Pages
+
+- [Home](https://dadarchitects.com/): Studio introduction and typography hero
+- [Work](https://dadarchitects.com/work): Curated archive of architecture projects
+- [About](https://dadarchitects.com/about): Studio philosophy, leadership, practice
+- [Contact](https://dadarchitects.com/contact): Inquiry form and office details
+
+## Social
+
+- Instagram: https://www.instagram.com/thedadarchitects/
+- LinkedIn: https://www.linkedin.com/company/dadarchitechts
+- Facebook: https://www.facebook.com/dadarchitectsofficial/
