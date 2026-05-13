@@ -5,7 +5,7 @@
 //   ADMIN_PASSWORD — strong password (plain). Compared in constant time.
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin', '/admin/:path*'],
 };
 
 const enc = new TextEncoder();
@@ -62,9 +62,7 @@ export default function middleware(req) {
 
   if (!(userOk && passOk)) return unauthorized();
 
-  const res = new Response(null);
-  res.headers.set('X-Frame-Options', 'DENY');
-  res.headers.set('X-Content-Type-Options', 'nosniff');
-  res.headers.set('Referrer-Policy', 'no-referrer');
-  return res;
+  // Return undefined to let the request continue to the static admin/index.html.
+  // Security headers for /admin/* are applied via vercel.json `headers` block.
+  return undefined;
 }
