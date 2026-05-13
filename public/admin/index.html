@@ -6,6 +6,16 @@
     <meta name="robots" content="noindex" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Content Manager — DAD Architects</title>
+    <style>
+      /* Hide GitHub branding on the login button — auth is env-based, not OAuth. */
+      [class*="AuthenticationPage"] button[type="button"] svg { display: none !important; }
+      [class*="AuthenticationPage"] button[type="button"] {
+        font-family: 'Barlow Condensed', system-ui, sans-serif !important;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+    </style>
   </head>
   <body>
     <script>
@@ -118,6 +128,30 @@
           ],
         },
       });
+
+      // Rebrand the login button (Decap hardcodes "Login with GitHub") and
+      // auto-click it once it renders — basic auth already verified the user.
+      (function () {
+        var done = false;
+        var observer = new MutationObserver(function () {
+          if (done) return;
+          var btns = document.querySelectorAll('[class*="AuthenticationPage"] button[type="button"]');
+          for (var i = 0; i < btns.length; i++) {
+            var b = btns[i];
+            if (b.textContent && /github/i.test(b.textContent)) {
+              b.textContent = 'Open CMS';
+              if (!done) {
+                done = true;
+                b.click();
+                observer.disconnect();
+              }
+              return;
+            }
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        setTimeout(function () { observer.disconnect(); }, 15000);
+      })();
     </script>
   </body>
 </html>
