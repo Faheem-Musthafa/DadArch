@@ -1,33 +1,70 @@
 // GET /api/auth
-// Step 1 of OAuth: redirect user to GitHub authorization.
+// Short-circuited login: after edge middleware verifies Basic Auth, return the
+// server-stored GitHub PAT directly to the Decap CMS opener window via
+// postMessage. No external OAuth dance.
+//
+// Required env vars (Vercel Project Settings → Environment Variables):
+//   GITHUB_TOKEN — fine-grained PAT scoped to the content repo, with
+//                  "Contents: Read and write" + "Metadata: Read" permissions.
 
-import crypto from 'node:crypto';
-
-const SCOPE = 'repo,user';
+const getSiteOrigin = (req) => {
+  const proto = (req.headers['x-forwarded-proto'] || 'https').split(',')[0];
+  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  return `${proto}://${host}`;
+};
 
 export default function handler(req, res) {
-  const clientId = process.env.OAUTH_CLIENT_ID;
-  if (!clientId) {
-    res.status(500).send('Missing OAUTH_CLIENT_ID env var.');
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    res.status(500).send('Server misconfigured: missing GITHUB_TOKEN.');
     return;
   }
 
-  const proto = (req.headers['x-forwarded-proto'] || 'https').split(',')[0];
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  const redirectUri = `${proto}://${host}/api/callback`;
+  const origin = getSiteOrigin(req);
+  const messageBody = JSON.stringify({ token, provider: 'github' });
+  const successMessage = `authorization:github:success:${messageBody}`;
 
-  const state = crypto.randomBytes(16).toString('hex');
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  res.setHeader('X-Frame-Options', 'DENY');
 
-  res.setHeader(
-    'Set-Cookie',
-    `decap_oauth_state=${state}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600`
-  );
+  res.status(200).send(`<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Authorizing…</title>
+  </head>
+  <body>
+    <p>Authorizing…</p>
+    <script>
+      (function () {
+        var TARGET = ${JSON.stringify(origin)};
+        var MESSAGE = ${JSON.stringify(successMessage)};
 
-  const url = new URL('https://github.com/login/oauth/authorize');
-  url.searchParams.set('client_id', clientId);
-  url.searchParams.set('redirect_uri', redirectUri);
-  url.searchParams.set('scope', SCOPE);
-  url.searchParams.set('state', state);
+        function send() {
+          if (!window.opener) {
+            document.body.innerText = 'No opener window. Open /admin and click Login.';
+            return;
+          }
+          window.opener.postMessage(MESSAGE, TARGET);
+        }
 
-  res.redirect(302, url.toString());
+        function listen(e) {
+          if (e.origin !== TARGET) return;
+          if (e.data === 'authorizing:github') {
+            send();
+            window.removeEventListener('message', listen);
+            setTimeout(function () { window.close(); }, 200);
+          }
+        }
+
+        window.addEventListener('message', listen, false);
+        if (window.opener) window.opener.postMessage('authorizing:github', TARGET);
+      })();
+    </script>
+  </body>
+</html>`);
 }

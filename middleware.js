@@ -5,7 +5,7 @@
 //   ADMIN_PASSWORD — strong password (plain). Compared in constant time.
 
 export const config = {
-  matcher: ['/admin', '/admin/:path*'],
+  matcher: ['/admin', '/admin/:path*', '/api/auth'],
 };
 
 const enc = new TextEncoder();
