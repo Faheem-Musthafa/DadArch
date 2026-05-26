@@ -76,7 +76,7 @@ const BlogPost = () => {
         description={post.excerpt}
         url={`/blog/${post.slug}`}
         type="article"
-        image={`https://dadarchitects.com${post.cover}`}
+        image={post.cover?.startsWith('http') ? post.cover : `https://dadarchitects.com${post.cover}`}
       />
 
       <article style={{ maxWidth: '900px', margin: '0 auto', padding: isMobile ? '38vh 5% 15vh' : '22vh 5% 18vh' }}>
