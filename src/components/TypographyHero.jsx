@@ -10,19 +10,19 @@ gsap.registerPlugin(useGSAP);
 const WORDS = [
   {
     id: '1', letter: 'D', remainder: 'ERIVING',
-    title: '01 // Thoughtful',
+    title: '01 // THOUGHTFUL',
     desc: 'Formulating spatial narratives that respond to environment and human needs. We sculpt ideas into tangible footprints.',
     tags: ['CONCEPTUALIZATION', 'MASTER PLANNING', '3D VISUALIZATION'],
   },
   {
     id: '2', letter: 'A', remainder: 'RCHITECTURAL',
-    title: '02 // Responsive',
+    title: '02 // RESPONSIVE',
     desc: 'Engineering aesthetics. Bridging materials, light, and gravity to construct timeless monolithic forms.',
     tags: ['STRUCTURAL DESIGN', 'FACADE ENGINEERING', 'SPATIAL DYNAMICS'],
   },
   {
     id: '3', letter: 'D', remainder: 'IMENSIONS',
-    title: '03 // Sustainable',
+    title: '03 // SUSTAINABLE',
     desc: 'Obsessive precision. Curating raw textures and refining every micro-interaction within the built space.',
     tags: ['INTERIOR CURATION', 'MATERIAL SELECTION', 'FURNITURE DESIGN'],
   },
