@@ -1,6 +1,6 @@
 ---
-order: 3
-name: Muhammed Fasil
+order: 1
+name: Mohammed Azhar
 role: Founder
-image: /uploads/img_20250815_154635.jpg.jpeg
+image: /uploads/img-20250830-wa0039~2.jpg.jpeg
 ---
