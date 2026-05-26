@@ -131,7 +131,7 @@ const Work = () => {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                     <motion.div layoutId={`title-container-${p.id}`}>
                       <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#ccc', display: 'block', marginBottom: '0.5rem' }}>
-                        {p.id} — {p.details.year}
+                        {p.id}
                       </span>
                       <motion.h2
                         layoutId={`title-${p.id}`}
@@ -221,44 +221,7 @@ const Work = () => {
             {/* ARTICLE CONTENT */}
             <div style={{ padding: isMobile ? '10vh 5%' : '15vh 5%' }}>
               <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr', gap: isMobile ? '4rem' : '8rem', marginBottom: '15vh' }}>
 
-                  {/* Stats Sidebar */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                  >
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem', padding: '3rem', backgroundColor: '#f9f9f9', borderRadius: '1rem' }}>
-                      <div>
-                        <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.5rem' }}>Area</span>
-                        <span style={{ fontSize: '1.2rem', fontWeight: 600, color: '#111', textTransform: 'uppercase' }}>{selectedProject.details.area}</span>
-                      </div>
-                      <div style={{ height: '1px', backgroundColor: '#eaeaea' }} />
-                      <div>
-                        <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.5rem' }}>Place</span>
-                        <span style={{ fontSize: '1.2rem', fontWeight: 600, color: '#111', textTransform: 'uppercase' }}>{selectedProject.subtitle}</span>
-                      </div>
-                      <div style={{ height: '1px', backgroundColor: '#eaeaea' }} />
-                      <div>
-                        <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.5rem' }}>Role</span>
-                        <span style={{ fontSize: '1.2rem', fontWeight: 600, color: '#111', textTransform: 'uppercase' }}>{selectedProject.details.role}</span>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Description */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    style={{ display: 'flex', alignItems: 'center' }}
-                  >
-                    <p style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', lineHeight: 1.4, color: '#111', margin: 0, fontWeight: 500, letterSpacing: '-0.02em' }}>
-                      {selectedProject.desc}
-                    </p>
-                  </motion.div>
-                </div>
 
                 {/* ASYMMETRICAL GALLERY */}
                 <motion.div

@@ -1,157 +1,158 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Content Manager — DAD Architects</title>
-    <style>
-      /* Hide GitHub branding on the login button — auth is env-based, not OAuth. */
-      [class*="AuthenticationPage"] button[type="button"] svg { display: none !important; }
-      [class*="AuthenticationPage"] button[type="button"] {
-        font-family: 'Barlow Condensed', system-ui, sans-serif !important;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-      }
-    </style>
-  </head>
-  <body>
-    <script>
-      window.CMS_MANUAL_INIT = true;
-    </script>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script>
-      const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
-      CMS.init({
-        config: {
-          ...(isLocal ? { local_backend: true } : {}),
-          backend: {
-            name: 'github',
-            repo: 'Faheem-Musthafa/DadArch',
-            branch: 'main',
-            base_url: location.origin,
-            auth_endpoint: 'api/auth',
-          },
-          media_folder: 'public/uploads',
-          public_folder: '/uploads',
-          site_url: 'https://www.dadarchitects.com/',
-          display_url: 'https://www.dadarchitects.com/',
-          logo_url: 'https://www.dadarchitects.com//favicon.svg',
-          collections: [
-            {
-              name: 'posts',
-              label: 'Journal Posts',
-              label_singular: 'Post',
-              folder: 'src/content/posts',
-              create: true,
-              delete: true,
-              identifier_field: 'title',
-              slug: '{{slug}}',
-              extension: 'md',
-              format: 'yaml-frontmatter',
-              fields: [
-                { label: 'Title', name: 'title', widget: 'string' },
-                { label: 'Slug', name: 'slug', widget: 'string', hint: 'URL path. Lowercase, hyphens only.' },
-                { label: 'Excerpt', name: 'excerpt', widget: 'text' },
-                { label: 'Date', name: 'date', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' },
-                { label: 'Author', name: 'author', widget: 'string', default: 'DAD Studio' },
-                { label: 'Read time', name: 'readTime', widget: 'string', default: '5 min read' },
-                { label: 'Cover image', name: 'cover', widget: 'image', hint: 'Cover image path, e.g. /uploads/cover.jpg' },
-                { label: 'Tags', name: 'tags', widget: 'list', default: ['GENERAL'], hint: 'Uppercase, one per item' },
-                { label: 'Body', name: 'body', widget: 'markdown' },
-              ],
-            },
-            {
-              name: 'projects',
-              label: 'Work — Projects',
-              label_singular: 'Project',
-              folder: 'src/content/projects',
-              create: true,
-              delete: true,
-              identifier_field: 'title',
-              slug: '{{order}}-{{title}}',
-              extension: 'md',
-              format: 'yaml-frontmatter',
-              fields: [
-                { label: 'ID', name: 'id', widget: 'string', hint: 'Two-digit string, e.g. "07"' },
-                { label: 'Order', name: 'order', widget: 'number', value_type: 'int', min: 1, default: 1 },
-                { label: 'Title', name: 'title', widget: 'string' },
-                { label: 'Subtitle / Place', name: 'subtitle', widget: 'string' },
-                { label: 'Main image', name: 'img', widget: 'image' },
-                { label: 'Area', name: 'area', widget: 'string' },
-                { label: 'Year', name: 'year', widget: 'string' },
-                { label: 'Role', name: 'role', widget: 'string' },
-                { label: 'Gallery', name: 'gallery', widget: 'list', field: { label: 'Image', name: 'image', widget: 'image' } },
-                { label: 'Description', name: 'body', widget: 'text' },
-              ],
-            },
-            {
-              name: 'founders',
-              label: 'About — Founders',
-              label_singular: 'Founder',
-              folder: 'src/content/founders',
-              create: true,
-              delete: true,
-              identifier_field: 'name',
-              slug: '{{order}}-{{name}}',
-              extension: 'md',
-              format: 'yaml-frontmatter',
-              fields: [
-                { label: 'Order', name: 'order', widget: 'number', value_type: 'int', min: 1, default: 1 },
-                { label: 'Name', name: 'name', widget: 'string' },
-                { label: 'Role', name: 'role', widget: 'string' },
-                { label: 'Photo', name: 'image', widget: 'image' },
-              ],
-            },
-            {
-              name: 'about',
-              label: 'About — Page',
-              files: [
-                {
-                  name: 'about',
-                  label: 'About page settings',
-                  file: 'src/content/about.md',
-                  extension: 'md',
-                  format: 'yaml-frontmatter',
-                  fields: [
-                    { label: 'Hero title', name: 'heroTitle', widget: 'string' },
-                    { label: 'Hero subtitle', name: 'heroSubtitle', widget: 'string' },
-                    { label: 'Studio paragraph', name: 'studioParagraph', widget: 'text' },
-                    { label: 'Studio image', name: 'studioImage', widget: 'image' },
-                    { label: 'Group photo', name: 'groupPhoto', widget: 'image' },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      });
 
-      // Rebrand the login button (Decap hardcodes "Login with GitHub") and
-      // auto-click it once it renders — basic auth already verified the user.
-      (function () {
-        var done = false;
-        var observer = new MutationObserver(function () {
-          if (done) return;
-          var btns = document.querySelectorAll('[class*="AuthenticationPage"] button[type="button"]');
-          for (var i = 0; i < btns.length; i++) {
-            var b = btns[i];
-            if (b.textContent && /github/i.test(b.textContent)) {
-              b.textContent = 'Open CMS';
-              if (!done) {
-                done = true;
-                b.click();
-                observer.disconnect();
-              }
-              return;
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Content Manager — DAD Architects</title>
+  <style>
+    /* Hide GitHub branding on the login button — auth is env-based, not OAuth. */
+    [class*="AuthenticationPage"] button[type="button"] svg {
+      display: none !important;
+    }
+
+    [class*="AuthenticationPage"] button[type="button"] {
+      font-family: 'Barlow Condensed', system-ui, sans-serif !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    window.CMS_MANUAL_INIT = true;
+  </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+    CMS.init({
+      config: {
+        ...(isLocal ? { local_backend: true } : {}),
+        backend: {
+          name: 'github',
+          repo: 'Faheem-Musthafa/DadArch',
+          branch: 'main',
+          base_url: location.origin,
+          auth_endpoint: 'api/auth',
+        },
+        media_folder: 'public/uploads',
+        public_folder: '/uploads',
+        site_url: 'https://www.dadarchitects.com/',
+        display_url: 'https://www.dadarchitects.com/',
+        logo_url: 'https://www.dadarchitects.com//favicon.svg',
+        collections: [
+          {
+            name: 'posts',
+            label: 'Journal Posts',
+            label_singular: 'Post',
+            folder: 'src/content/posts',
+            create: true,
+            delete: true,
+            identifier_field: 'title',
+            slug: '{{slug}}',
+            extension: 'md',
+            format: 'yaml-frontmatter',
+            fields: [
+              { label: 'Title', name: 'title', widget: 'string' },
+              { label: 'Slug', name: 'slug', widget: 'string', hint: 'URL path. Lowercase, hyphens only.' },
+              { label: 'Excerpt', name: 'excerpt', widget: 'text' },
+              { label: 'Date', name: 'date', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' },
+              { label: 'Author', name: 'author', widget: 'string', default: 'DAD Studio' },
+              { label: 'Read time', name: 'readTime', widget: 'string', default: '5 min read' },
+              { label: 'Cover image', name: 'cover', widget: 'image', hint: 'Cover image path, e.g. /uploads/cover.jpg' },
+              { label: 'Tags', name: 'tags', widget: 'list', default: ['GENERAL'], hint: 'Uppercase, one per item' },
+              { label: 'Body', name: 'body', widget: 'markdown' },
+            ],
+          },
+          {
+            name: 'projects',
+            label: 'Work — Projects',
+            label_singular: 'Project',
+            folder: 'src/content/projects',
+            create: true,
+            delete: true,
+            identifier_field: 'title',
+            slug: '{{order}}-{{title}}',
+            extension: 'md',
+            format: 'yaml-frontmatter',
+            fields: [
+              { label: 'ID', name: 'id', widget: 'string', hint: 'Two-digit string, e.g. "07"' },
+              { label: 'Order', name: 'order', widget: 'number', value_type: 'int', min: 1, default: 1 },
+              { label: 'Title', name: 'title', widget: 'string' },
+              { label: 'Main image', name: 'img', widget: 'image' },
+              { label: 'Gallery', name: 'gallery', widget: 'list', field: { label: 'Image', name: 'image', widget: 'image' } },
+            ],
+          },
+          {
+            name: 'founders',
+            label: 'About — Founders',
+            label_singular: 'Founder',
+            folder: 'src/content/founders',
+            create: true,
+            delete: true,
+            identifier_field: 'name',
+            slug: '{{order}}-{{name}}',
+            extension: 'md',
+            format: 'yaml-frontmatter',
+            fields: [
+              { label: 'Order', name: 'order', widget: 'number', value_type: 'int', min: 1, default: 1 },
+              { label: 'Name', name: 'name', widget: 'string' },
+              { label: 'Role', name: 'role', widget: 'string' },
+              { label: 'Photo', name: 'image', widget: 'image' },
+            ],
+          },
+          {
+            name: 'about',
+            label: 'About — Page',
+            files: [
+              {
+                name: 'about',
+                label: 'About page settings',
+                file: 'src/content/about.md',
+                extension: 'md',
+                format: 'yaml-frontmatter',
+                fields: [
+                  { label: 'Hero title', name: 'heroTitle', widget: 'string' },
+                  { label: 'Hero subtitle', name: 'heroSubtitle', widget: 'string' },
+                  { label: 'Studio paragraph', name: 'studioParagraph', widget: 'text' },
+                  { label: 'Studio image', name: 'studioImage', widget: 'image' },
+                  { label: 'Group photo', name: 'groupPhoto', widget: 'image' },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    // Rebrand the login button (Decap hardcodes "Login with GitHub") and
+    // auto-click it once it renders — basic auth already verified the user.
+    (function () {
+      var done = false;
+      var observer = new MutationObserver(function () {
+        if (done) return;
+        var btns = document.querySelectorAll('[class*="AuthenticationPage"] button[type="button"]');
+        for (var i = 0; i < btns.length; i++) {
+          var b = btns[i];
+          if (b.textContent && /github/i.test(b.textContent)) {
+            b.textContent = 'Open CMS';
+            if (!done) {
+              done = true;
+              b.click();
+              observer.disconnect();
             }
+            return;
           }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-        setTimeout(function () { observer.disconnect(); }, 15000);
-      })();
-    </script>
-  </body>
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      setTimeout(function () { observer.disconnect(); }, 15000);
+    })();
+  </script>
+</body>
+
 </html>
