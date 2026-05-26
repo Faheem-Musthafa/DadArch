@@ -250,7 +250,7 @@ const Work = () => {
                           backgroundColor: '#f5f5f5'
                         }}
                       >
-                        <img src={imgUrl} alt={`Gallery ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={imgUrl} alt={`Gallery ${idx + 1}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       </div>
                     );
                   })}

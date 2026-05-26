@@ -124,7 +124,7 @@ const BlogPost = () => {
         </header>
 
         <div className="post-image" style={{ width: '100%', aspectRatio: '16 / 9', overflow: 'hidden', marginBottom: isMobile ? '6vh' : '10vh', border: '1px solid var(--border)' }}>
-          <img src={post.cover} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }} />
+          <img src={post.cover} alt={post.title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }} />
         </div>
 
         <div className="post-body" style={{ maxWidth: '60ch' }}>

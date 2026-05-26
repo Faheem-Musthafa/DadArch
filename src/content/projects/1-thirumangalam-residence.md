@@ -2,11 +2,11 @@
 id: "01"
 order: 1
 title: Thirumangalam Residence
-img: /uploads/42-copy.jpg
+img: /uploads/42-copy.webp
 gallery:
-  - /uploads/1.jpg
-  - /uploads/2.jpg
-  - /uploads/3.jpg
-  - /uploads/4.jpg
-  - /uploads/5.jpg
+  - /uploads/1.webp
+  - /uploads/2.webp
+  - /uploads/3.webp
+  - /uploads/4.webp
+  - /uploads/5.webp
 ---
