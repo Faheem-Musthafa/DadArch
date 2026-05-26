@@ -40,21 +40,25 @@ const About = () => {
   useGSAP(() => {
     if (isMobile) return;
 
-    gsap.fromTo(
-      '.about-hero h1',
-      { letterSpacing: '-0.04em', opacity: 0.6 },
-      {
-        letterSpacing: '0em',
-        opacity: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.about-hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      }
-    );
+    const heroHeading = gsap.utils.toArray('.about-hero h1');
+    const heroSection = gsap.utils.toArray('.about-hero');
+    if (heroHeading.length > 0 && heroSection.length > 0) {
+      gsap.fromTo(
+        heroHeading,
+        { letterSpacing: '-0.04em', opacity: 0.6 },
+        {
+          letterSpacing: '0em',
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroSection,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      );
+    }
 
     gsap.utils.toArray('.about-reveal').forEach((el) => {
       gsap.from(el, {

@@ -24,21 +24,27 @@ const BlogPost = () => {
   useGSAP(() => {
     if (!post) return;
 
-    gsap.from('.post-header > *', {
-      y: 40,
-      opacity: 0,
-      duration: 1.2,
-      stagger: 0.1,
-      ease: 'power3.out'
-    });
+    const headerChildren = gsap.utils.toArray('.post-header > *');
+    if (headerChildren.length > 0) {
+      gsap.from(headerChildren, {
+        y: 40,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: 'power3.out'
+      });
+    }
 
-    gsap.from('.post-image', {
-      scale: 1.05,
-      opacity: 0,
-      duration: 1.5,
-      delay: 0.3,
-      ease: 'power3.out'
-    });
+    const postImage = gsap.utils.toArray('.post-image');
+    if (postImage.length > 0) {
+      gsap.from(postImage, {
+        scale: 1.05,
+        opacity: 0,
+        duration: 1.5,
+        delay: 0.3,
+        ease: 'power3.out'
+      });
+    }
 
     gsap.utils.toArray('.post-body p').forEach((p) => {
       gsap.from(p, {
@@ -73,7 +79,7 @@ const BlogPost = () => {
         image={`https://dadarchitects.com${post.cover}`}
       />
 
-      <article style={{ maxWidth: '900px', margin: '0 auto', padding: isMobile ? '18vh 5% 15vh' : '22vh 5% 18vh' }}>
+      <article style={{ maxWidth: '900px', margin: '0 auto', padding: isMobile ? '38vh 5% 15vh' : '22vh 5% 18vh' }}>
         <header className="post-header" style={{ marginBottom: isMobile ? '6vh' : '10vh' }}>
           <Link
             to="/blog"

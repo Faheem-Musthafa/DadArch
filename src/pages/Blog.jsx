@@ -20,16 +20,18 @@ const Blog = () => {
   const rootRef = useRef(null);
 
   useGSAP(() => {
-    if (!isMobile) {
+    const heroHeading = gsap.utils.toArray('.blog-hero h1');
+    const heroSection = gsap.utils.toArray('.blog-hero');
+    if (!isMobile && heroHeading.length > 0 && heroSection.length > 0) {
       gsap.fromTo(
-        '.blog-hero h1',
+        heroHeading,
         { letterSpacing: '-0.04em', opacity: 0.6 },
         {
           letterSpacing: '0em',
           opacity: 1,
           ease: 'none',
           scrollTrigger: {
-            trigger: '.blog-hero',
+            trigger: heroSection,
             start: 'top top',
             end: 'bottom top',
             scrub: 1,
@@ -38,13 +40,16 @@ const Blog = () => {
       );
     }
 
-    gsap.set('.blog-card', { opacity: 0, y: 30 });
-    ScrollTrigger.batch('.blog-card', {
-      start: 'top bottom-=80',
-      once: true,
-      onEnter: (els) =>
-        gsap.to(els, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power3.out', overwrite: 'auto' }),
-    });
+    const cards = gsap.utils.toArray('.blog-card');
+    if (cards.length > 0) {
+      gsap.set(cards, { opacity: 0, y: 30 });
+      ScrollTrigger.batch(cards, {
+        start: 'top bottom-=80',
+        once: true,
+        onEnter: (els) =>
+          gsap.to(els, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power3.out', overwrite: 'auto' }),
+      });
+    }
     requestAnimationFrame(() => ScrollTrigger.refresh());
   }, { scope: rootRef, dependencies: [isMobile] });
 
@@ -63,7 +68,7 @@ const Blog = () => {
         url="/blog"
       />
 
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '20vh 5% 10vh' : '25vh 5% 15vh' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '38vh 5% 10vh' : '25vh 5% 15vh' }}>
         <section className="blog-hero" style={{ marginBottom: isMobile ? '10vh' : '15vh' }}>
           <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--text-secondary)', display: 'block', marginBottom: '2rem' }}>
             Journal

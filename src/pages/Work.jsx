@@ -41,13 +41,16 @@ const Work = () => {
   const rootRef = useRef(null);
 
   useGSAP(() => {
-    gsap.set('.work-card', { opacity: 0 });
+    const cards = gsap.utils.toArray('.work-card');
+    if (cards.length > 0) {
+      gsap.set(cards, { opacity: 0 });
 
-    ScrollTrigger.batch('.work-card', {
-      start: 'top bottom-=80',
-      once: true,
-      onEnter: (els) => gsap.to(els, { opacity: 1, duration: 1.1, stagger: 0.08, ease: 'power3.out', overwrite: 'auto' }),
-    });
+      ScrollTrigger.batch(cards, {
+        start: 'top bottom-=80',
+        once: true,
+        onEnter: (els) => gsap.to(els, { opacity: 1, duration: 1.1, stagger: 0.08, ease: 'power3.out', overwrite: 'auto' }),
+      });
+    }
 
     requestAnimationFrame(() => ScrollTrigger.refresh());
   }, { scope: rootRef, dependencies: [isMobile] });
@@ -74,7 +77,7 @@ const Work = () => {
       />
 
       {/* HERO */}
-      <section style={{ padding: isMobile ? '10vh 5% ' : '10vh 5% 10vh' }}>
+      <section style={{ padding: isMobile ? '35vh 5% 0' : '10vh 5% 10vh' }}>
       </section>
 
       {/* BENTO GRID PORTFOLIO */}

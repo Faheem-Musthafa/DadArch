@@ -10,19 +10,19 @@ gsap.registerPlugin(useGSAP);
 const WORDS = [
   {
     id: '1', letter: 'D', remainder: 'ERIVING',
-    title: '01 // THE CONCEPT',
+    title: '01 // Thoughtful',
     desc: 'Formulating spatial narratives that respond to environment and human needs. We sculpt ideas into tangible footprints.',
     tags: ['CONCEPTUALIZATION', 'MASTER PLANNING', '3D VISUALIZATION'],
   },
   {
     id: '2', letter: 'A', remainder: 'RCHITECTURAL',
-    title: '02 // THE STRUCTURE',
+    title: '02 // Responsive',
     desc: 'Engineering aesthetics. Bridging materials, light, and gravity to construct timeless monolithic forms.',
     tags: ['STRUCTURAL DESIGN', 'FACADE ENGINEERING', 'SPATIAL DYNAMICS'],
   },
   {
     id: '3', letter: 'D', remainder: 'IMENSIONS',
-    title: '03 // THE EXECUTION',
+    title: '03 // Sustainable',
     desc: 'Obsessive precision. Curating raw textures and refining every micro-interaction within the built space.',
     tags: ['INTERIOR CURATION', 'MATERIAL SELECTION', 'FURNITURE DESIGN'],
   },
@@ -61,9 +61,15 @@ const TypographyHero = () => {
   const heroRef = useRef(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
-    tl.from('.hero-letter', { y: 80, opacity: 0, duration: 1.2, stagger: 0.1 })
-      .from('.hero-meta', { opacity: 0, y: 12, duration: 0.8 }, '-=0.6');
+    const letters = gsap.utils.toArray('.hero-letter');
+    const meta = gsap.utils.toArray('.hero-meta');
+    if (letters.length > 0) {
+      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+      tl.from(letters, { y: 80, opacity: 0, duration: 1.2, stagger: 0.1 });
+      if (meta.length > 0) {
+        tl.from(meta, { opacity: 0, y: 12, duration: 0.8 }, '-=0.6');
+      }
+    }
   }, { scope: heroRef });
 
   const headingStyle = {
@@ -203,7 +209,7 @@ const TypographyHero = () => {
       </div>
 
       {isMobile && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -217,7 +223,7 @@ const TypographyHero = () => {
             zIndex: 10,
           }}
         >
-          <a 
+          <a
             href="https://wa.me/919995881828"
             target="_blank"
             rel="noopener noreferrer"
@@ -237,7 +243,7 @@ const TypographyHero = () => {
           >
             <ChatCircle size={22} weight="fill" />
           </a>
-          <a 
+          <a
             href="tel:+919995881828"
             aria-label="Call"
             style={{
