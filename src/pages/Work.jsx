@@ -257,7 +257,7 @@ const Work = () => {
                 </motion.div>
 
                 <div style={{ textAlign: 'center', margin: '15vh 0 5vh 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem' }}>
-                  <motion.a 
+                  <motion.a
                     href="/contact"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -281,9 +281,6 @@ const Work = () => {
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
                   </motion.a>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#ccc' }}>
-                    End of Project
-                  </span>
                 </div>
               </div>
             </div>

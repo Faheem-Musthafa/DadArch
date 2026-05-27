@@ -1,0 +1,32 @@
+name: Image size check
+
+on:
+  pull_request:
+    paths:
+      - 'public/uploads/**'
+      - 'public/images/**'
+      - 'src/assets/**'
+      - 'src/content/**'
+      - 'scripts/check-images.sh'
+  push:
+    branches: [main]
+    paths:
+      - 'public/uploads/**'
+      - 'public/images/**'
+      - 'src/assets/**'
+      - 'src/content/**'
+      - 'scripts/check-images.sh'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_MAX_KB: 500
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify check script exists
+        run: test -x scripts/check-images.sh || chmod +x scripts/check-images.sh
+
+      - name: Run image gate
+        run: bash scripts/check-images.sh

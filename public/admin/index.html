@@ -27,14 +27,7 @@
     window.CMS_MANUAL_INIT = true;
   </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script
-    src="https://unpkg.com/decap-cms-media-library-cloudinary@^3.0.0/dist/decap-cms-media-library-cloudinary.js"></script>
   <script>
-    // === Cloudinary credentials — replace these two values ===
-    const CLOUDINARY_CLOUD_NAME = 'dryim8dlw';
-    const CLOUDINARY_API_KEY = '122486416259315';
-    // =========================================================
-
     const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
     CMS.init({
       config: {
@@ -45,17 +38,6 @@
           branch: 'main',
           base_url: location.origin,
           auth_endpoint: 'api/auth',
-        },
-        media_library: {
-          name: 'cloudinary',
-          output_filename_only: false,
-          config: {
-            cloud_name: CLOUDINARY_CLOUD_NAME,
-            api_key: CLOUDINARY_API_KEY,
-            default_transformations: [[
-              { fetch_format: 'auto', quality: 'auto', width: 1920, crop: 'limit' }
-            ]],
-          },
         },
         media_folder: 'public/uploads',
         public_folder: '/uploads',
@@ -81,7 +63,7 @@
               { label: 'Date', name: 'date', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' },
               { label: 'Author', name: 'author', widget: 'string', default: 'DAD Studio' },
               { label: 'Read time', name: 'readTime', widget: 'string', default: '5 min read' },
-              { label: 'Cover image', name: 'cover', widget: 'image', hint: 'Pick from Cloudinary. Full URL stored.' },
+              { label: 'Cover image', name: 'cover', widget: 'image', hint: 'Upload compressed image (run `npm run compress` first, max ~300KB).' },
               { label: 'Tags', name: 'tags', widget: 'list', default: ['GENERAL'], hint: 'Uppercase, one per item' },
               { label: 'Body', name: 'body', widget: 'markdown' },
             ],

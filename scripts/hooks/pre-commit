@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Block commits with oversized or non-WebP images.
+# Reuses scripts/check-images.sh against only staged image files.
+
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+mapfile -t staged < <(
+  git diff --cached --name-only --diff-filter=ACMR \
+    | grep -iE '\.(jpe?g|png|webp|gif|tiff?|heic|heif|bmp|avif)$' || true
+)
+
+if [[ ${#staged[@]} -eq 0 ]]; then
+  exit 0
+fi
+
+bash scripts/check-images.sh "${staged[@]}"

@@ -5,11 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "bash scripts/check-images.sh",
     "build": "vite build",
+    "prepare": "git config core.hooksPath scripts/hooks 2>/dev/null || true",
+    "check:images": "bash scripts/check-images.sh",
     "lint": "eslint .",
     "preview": "vite preview",
     "cms": "decap-server",
-    "dev:cms": "concurrently -k -n vite,cms -c blue,magenta \"npm:dev\" \"npm:cms\""
+    "dev:cms": "concurrently -k -n vite,cms -c blue,magenta \"npm:dev\" \"npm:cms\"",
+    "compress": "bash scripts/compress-images.sh"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
