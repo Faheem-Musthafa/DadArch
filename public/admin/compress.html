@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Compress Images — DAD Architects</title>
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --fg: #f5f5f0;
+      --muted: #8a8a85;
+      --accent: #c8a572;
+      --border: #2a2a26;
+      --ok: #6ab187;
+      --warn: #d4a657;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem 6rem;
+    }
+
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-family: "Barlow Condensed", system-ui, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      margin: 0 0 0.25rem;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    .controls label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      color: var(--muted);
+    }
+
+    .controls input[type=number] {
+      width: 100px;
+      background: #161614;
+      color: var(--fg);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+
+    .drop {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      background: #131311;
+    }
+
+    .drop.hover {
+      border-color: var(--accent);
+      background: #1a1816;
+    }
+
+    .drop p {
+      margin: 0.4rem 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .drop strong {
+      color: var(--fg);
+    }
+
+    .drop input { display: none; }
+
+    .list {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      background: #161614;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.85rem;
+    }
+
+    .thumb {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      background: #222;
+      border-radius: 4px;
+    }
+
+    .meta {
+      min-width: 0;
+    }
+
+    .name {
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.25rem;
+    }
+
+    .stats {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stats .save {
+      color: var(--ok);
+      margin-left: 0.5rem;
+    }
+
+    .stats .warn { color: var(--warn); }
+
+    .actions { display: flex; gap: 0.4rem; }
+
+    button, a.btn {
+      font-family: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.55rem 0.95rem;
+      background: var(--accent);
+      color: #0e0e0e;
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    button.ghost, a.btn.ghost {
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid var(--border);
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .toolbar {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .nav {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+    }
+
+    .nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+    .err {
+      color: #d46868;
+      font-size: 0.78rem;
+      margin-top: 0.3rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>Compress Images</h1>
+    <p class="sub">Drop photos here. They are resized + converted to WebP in your browser. Nothing is uploaded. Then upload the downloaded files via the CMS.</p>
+
+    <div class="controls">
+      <label>
+        Max width (px)
+        <input id="maxWidth" type="number" min="320" max="4000" step="80" value="1920" />
+      </label>
+      <label>
+        Quality (0-1)
+        <input id="quality" type="number" min="0.4" max="0.95" step="0.05" value="0.8" />
+      </label>
+      <label>
+        Target max KB
+        <input id="targetKb" type="number" min="100" max="2000" step="50" value="500" />
+      </label>
+    </div>
+
+    <label class="drop" id="drop">
+      <input id="file" type="file" accept="image/*" multiple />
+      <p><strong>Click to choose</strong> or drag images here</p>
+      <p>JPEG · PNG · HEIC · TIFF · WebP · multiple files OK</p>
+    </label>
+
+    <div class="list" id="list"></div>
+
+    <div class="toolbar" id="toolbar" style="display:none;">
+      <button id="downloadAll">Download all</button>
+      <button id="clear" class="ghost">Clear</button>
+    </div>
+
+    <div class="nav">
+      <a href="/admin/">Back to CMS</a>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const drop = $('drop');
+    const fileInput = $('file');
+    const list = $('list');
+    const toolbar = $('toolbar');
+
+    const items = [];
+
+    drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('hover'); });
+    drop.addEventListener('dragleave', () => drop.classList.remove('hover'));
+    drop.addEventListener('drop', (e) => {
+      e.preventDefault();
+      drop.classList.remove('hover');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    function slugify(name) {
+      const stem = name.replace(/\.[^.]+$/, '');
+      return stem
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 80) || 'image';
+    }
+
+    function fmtKb(bytes) {
+      return (bytes / 1024).toFixed(0) + ' KB';
+    }
+
+    async function loadBitmap(file) {
+      try {
+        return await createImageBitmap(file, { imageOrientation: 'from-image' });
+      } catch {
+        return await new Promise((res, rej) => {
+          const img = new Image();
+          img.onload = () => res(img);
+          img.onerror = rej;
+          img.src = URL.createObjectURL(file);
+        });
+      }
+    }
+
+    async function compressOne(file) {
+      const maxWidth = parseInt($('maxWidth').value, 10) || 1920;
+      let quality = parseFloat($('quality').value) || 0.8;
+      const targetKb = parseInt($('targetKb').value, 10) || 500;
+
+      const bmp = await loadBitmap(file);
+      const srcW = bmp.width;
+      const srcH = bmp.height;
+      const scale = Math.min(1, maxWidth / Math.max(srcW, srcH));
+      const dstW = Math.round(srcW * scale);
+      const dstH = Math.round(srcH * scale);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = dstW;
+      canvas.height = dstH;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(bmp, 0, 0, dstW, dstH);
+
+      let blob = await new Promise((res) => canvas.toBlob(res, 'image/webp', quality));
+      let attempts = 0;
+      while (blob && blob.size / 1024 > targetKb && quality > 0.45 && attempts < 5) {
+        quality = Math.max(0.45, quality - 0.1);
+        blob = await new Promise((res) => canvas.toBlob(res, 'image/webp', quality));
+        attempts++;
+      }
+
+      if (!blob) throw new Error('WebP encoding failed');
+
+      return {
+        blob,
+        width: dstW,
+        height: dstH,
+        finalQuality: quality,
+      };
+    }
+
+    async function handleFiles(files) {
+      for (const file of files) {
+        if (!file.type.startsWith('image/') && !/\.(heic|heif|tif|tiff)$/i.test(file.name)) {
+          continue;
+        }
+
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.innerHTML = `
+          <img class="thumb" alt="" />
+          <div class="meta">
+            <div class="name"></div>
+            <div class="stats">processing…</div>
+          </div>
+          <div class="actions"></div>
+        `;
+        list.appendChild(row);
+        toolbar.style.display = 'flex';
+
+        const thumb = row.querySelector('.thumb');
+        const nameEl = row.querySelector('.name');
+        const statsEl = row.querySelector('.stats');
+        const actionsEl = row.querySelector('.actions');
+
+        nameEl.textContent = file.name;
+
+        try {
+          const result = await compressOne(file);
+          const outName = slugify(file.name) + '.webp';
+          const url = URL.createObjectURL(result.blob);
+
+          thumb.src = url;
+          const origKb = file.size / 1024;
+          const outKb = result.blob.size / 1024;
+          const pct = Math.round((1 - outKb / origKb) * 100);
+
+          const warn = outKb > parseInt($('targetKb').value, 10);
+          statsEl.innerHTML = `
+            ${fmtKb(file.size)} → <strong>${fmtKb(result.blob.size)}</strong>
+            · ${result.width}×${result.height}
+            · q${result.finalQuality.toFixed(2)}
+            <span class="${warn ? 'warn' : 'save'}">−${pct}%${warn ? ' (over target)' : ''}</span>
+          `;
+
+          const a = document.createElement('a');
+          a.className = 'btn';
+          a.href = url;
+          a.download = outName;
+          a.textContent = 'Download';
+          actionsEl.appendChild(a);
+
+          items.push({ url, name: outName, blob: result.blob });
+        } catch (err) {
+          const span = document.createElement('span');
+          span.className = 'err';
+          span.textContent = 'Failed: ' + (err && err.message ? err.message : String(err));
+          statsEl.replaceChildren(span);
+        }
+      }
+    }
+
+    $('downloadAll').addEventListener('click', () => {
+      for (const it of items) {
+        const a = document.createElement('a');
+        a.href = it.url;
+        a.download = it.name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    });
+
+    $('clear').addEventListener('click', () => {
+      for (const it of items) URL.revokeObjectURL(it.url);
+      items.length = 0;
+      list.innerHTML = '';
+      toolbar.style.display = 'none';
+      fileInput.value = '';
+    });
+  </script>
+</body>
+
+</html>

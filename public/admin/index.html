@@ -63,7 +63,7 @@
               { label: 'Date', name: 'date', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' },
               { label: 'Author', name: 'author', widget: 'string', default: 'DAD Studio' },
               { label: 'Read time', name: 'readTime', widget: 'string', default: '5 min read' },
-              { label: 'Cover image', name: 'cover', widget: 'image', hint: 'Upload compressed image (run `npm run compress` first, max ~300KB).' },
+              { label: 'Cover image', name: 'cover', widget: 'image', hint: 'Auto-compressed on upload (max 1920px, WebP, ≤500KB).' },
               { label: 'Tags', name: 'tags', widget: 'list', default: ['GENERAL'], hint: 'Uppercase, one per item' },
               { label: 'Body', name: 'body', widget: 'markdown' },
             ],
@@ -151,6 +151,152 @@
       });
       observer.observe(document.body, { childList: true, subtree: true });
       setTimeout(function () { observer.disconnect(); }, 15000);
+    })();
+
+    // === Auto-compress on upload ===========================================
+    // Intercepts file <input> change events inside the CMS, resizes images to
+    // MAX_WIDTH, encodes WebP at QUALITY, retries with lower q if over
+    // TARGET_KB, then re-dispatches change with the compressed File.
+    // ======================================================================
+    (function () {
+      const MAX_WIDTH = 1920;
+      const INITIAL_QUALITY = 0.8;
+      const TARGET_KB = 500;
+      const MIN_QUALITY = 0.45;
+
+      const SUPPORTED = /^image\/(jpeg|png|webp|gif|bmp|tiff|heic|heif|avif)$/i;
+
+      function slugify(name) {
+        const stem = name.replace(/\.[^.]+$/, '');
+        return stem
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .slice(0, 80) || 'image';
+      }
+
+      async function loadBitmap(file) {
+        try {
+          return await createImageBitmap(file, { imageOrientation: 'from-image' });
+        } catch (e) {
+          return await new Promise((res, rej) => {
+            const img = new Image();
+            img.onload = () => res(img);
+            img.onerror = rej;
+            img.src = URL.createObjectURL(file);
+          });
+        }
+      }
+
+      async function compressFile(file) {
+        if (!file || !file.type) return file;
+        if (!SUPPORTED.test(file.type) && !/\.(heic|heif|tif|tiff)$/i.test(file.name)) {
+          return file;
+        }
+        // Skip tiny files — already small.
+        if (file.size <= TARGET_KB * 1024 && file.type === 'image/webp') {
+          return file;
+        }
+
+        const bmp = await loadBitmap(file);
+        const srcW = bmp.width;
+        const srcH = bmp.height;
+        const scale = Math.min(1, MAX_WIDTH / Math.max(srcW, srcH));
+        const dstW = Math.round(srcW * scale);
+        const dstH = Math.round(srcH * scale);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = dstW;
+        canvas.height = dstH;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(bmp, 0, 0, dstW, dstH);
+
+        let q = INITIAL_QUALITY;
+        let blob = await new Promise((r) => canvas.toBlob(r, 'image/webp', q));
+        let attempts = 0;
+        while (blob && blob.size / 1024 > TARGET_KB && q > MIN_QUALITY && attempts < 5) {
+          q = Math.max(MIN_QUALITY, q - 0.1);
+          blob = await new Promise((r) => canvas.toBlob(r, 'image/webp', q));
+          attempts++;
+        }
+        if (!blob) return file;
+
+        return new File([blob], slugify(file.name) + '.webp', {
+          type: 'image/webp',
+          lastModified: Date.now(),
+        });
+      }
+
+      function makeStatusBadge() {
+        const el = document.createElement('div');
+        el.style.cssText = [
+          'position:fixed', 'bottom:20px', 'right:20px',
+          'background:#0e0e0e', 'color:#c8a572',
+          'border:1px solid #c8a572', 'border-radius:6px',
+          'padding:0.7rem 1rem', 'font-family:system-ui,sans-serif',
+          'font-size:0.85rem', 'letter-spacing:0.05em',
+          'z-index:99999', 'box-shadow:0 4px 12px rgba(0,0,0,0.4)',
+          'transition:opacity 0.25s',
+        ].join(';');
+        document.body.appendChild(el);
+        return el;
+      }
+
+      let badge = null;
+      function setStatus(text, autoHideMs) {
+        if (!badge) badge = makeStatusBadge();
+        badge.textContent = text;
+        badge.style.opacity = '1';
+        if (autoHideMs) {
+          clearTimeout(badge._hideT);
+          badge._hideT = setTimeout(() => { badge.style.opacity = '0'; }, autoHideMs);
+        }
+      }
+
+      document.addEventListener('change', async function (e) {
+        const input = e.target;
+        if (!(input instanceof HTMLInputElement) || input.type !== 'file') return;
+        if (!input.files || input.files.length === 0) return;
+        if (input.dataset.autoCompressed === '1') return;
+
+        // Don't intercept non-image pickers.
+        const fileArr = Array.from(input.files);
+        const hasImage = fileArr.some(f => SUPPORTED.test(f.type) || /\.(heic|heif|tif|tiff)$/i.test(f.name));
+        if (!hasImage) return;
+
+        e.stopImmediatePropagation();
+        e.preventDefault();
+
+        setStatus('Compressing ' + fileArr.length + ' image' + (fileArr.length > 1 ? 's' : '') + '…');
+
+        const compressed = [];
+        for (let i = 0; i < fileArr.length; i++) {
+          setStatus('Compressing ' + (i + 1) + '/' + fileArr.length + '…');
+          try {
+            compressed.push(await compressFile(fileArr[i]));
+          } catch (err) {
+            console.warn('[admin] compress failed, using original:', fileArr[i].name, err);
+            compressed.push(fileArr[i]);
+          }
+        }
+
+        const dt = new DataTransfer();
+        for (const f of compressed) dt.items.add(f);
+
+        input.dataset.autoCompressed = '1';
+        input.files = dt.files;
+
+        const totalIn = fileArr.reduce((a, f) => a + f.size, 0);
+        const totalOut = compressed.reduce((a, f) => a + f.size, 0);
+        const saved = Math.max(0, Math.round((1 - totalOut / totalIn) * 100));
+        setStatus('Compressed · −' + saved + '% (' + Math.round(totalOut / 1024) + ' KB)', 3500);
+
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+
+        setTimeout(() => { delete input.dataset.autoCompressed; }, 200);
+      }, true);
+
+      console.info('[admin] auto-compress active: max=' + MAX_WIDTH + 'px, q=' + INITIAL_QUALITY + ', target<=' + TARGET_KB + 'KB');
     })();
   </script>
 </body>
