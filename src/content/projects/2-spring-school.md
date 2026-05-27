@@ -1,7 +1,7 @@
 ---
 id: "02"
 order: 2
-title: SPRING SCHOOL
+title: SPRINGS SCHOOL
 img: /uploads/dad-springs-2.webp
 gallery:
   - /uploads/dad-springs-51.webp
