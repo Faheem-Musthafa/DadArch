@@ -42,7 +42,7 @@ const BUTTON_RESET = {
 };
 
 const sectionStyle = {
-  width: '100vw',
+  width: '100%',
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',

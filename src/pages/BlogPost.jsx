@@ -79,7 +79,7 @@ const BlogPost = () => {
         image={post.cover?.startsWith('http') ? post.cover : `https://dadarchitects.com${post.cover}`}
       />
 
-      <article style={{ maxWidth: '900px', margin: '0 auto', padding: isMobile ? '38vh 5% 15vh' : '22vh 5% 18vh' }}>
+      <article style={{ maxWidth: '900px', margin: isMobile ? '0 auto' : '0', padding: isMobile ? '38vh 5% 15vh' : '22vh 5% 18vh' }}>
         <header className="post-header" style={{ marginBottom: isMobile ? '6vh' : '10vh' }}>
           <Link
             to="/blog"

@@ -83,7 +83,7 @@ const About = () => {
         url="/about"
       />
 
-      <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '0 5%' }}>
+      <div style={{ maxWidth: '1600px', margin: isMobile ? '0 auto' : '0', padding: '0 5%' }}>
 
         {/* HERO SECTION */}
         <section className="about-hero" style={{ height: '85vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
@@ -279,23 +279,21 @@ const About = () => {
         </section>
 
       </div>
-      {/* MASSIVE FOOTER / CTA */}
       <section style={{ borderTop: '1px solid #000', backgroundColor: '#fff', color: '#000', overflow: 'hidden' }}>
-        <motion.a
-          href="/contact"
-          style={{ textDecoration: 'none', color: 'inherit', display: 'block', padding: '10vh 5%' }}
-          whileHover="hover"
-        >
+        <div style={{ maxWidth: '1600px', margin: isMobile ? '0 auto' : '0', padding: '0 5%' }}>
+          <motion.a
+            href="/contact"
+            style={{ textDecoration: 'none', color: 'inherit', display: 'block', padding: '10vh 0' }}
+            whileHover="hover"
+          >
           <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between' }}>
-            <div style={{ overflow: 'hidden' }}>
-              <motion.h2
-                variants={{ hover: { x: 30 } }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontSize: 'clamp(4rem, 12vw, 14rem)', fontWeight: 800, textTransform: 'uppercase', margin: 0, lineHeight: 0.85, letterSpacing: '-0.03em' }}
-              >
-                Start A<br />Project
-              </motion.h2>
-            </div>
+            <motion.h2
+              variants={{ hover: { x: 30 } }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{ fontSize: 'clamp(4rem, 12vw, 14rem)', fontWeight: 800, textTransform: 'uppercase', margin: 0, lineHeight: 0.85, letterSpacing: '-0.03em' }}
+            >
+              Start A<br />Project
+            </motion.h2>
 
             <motion.div
               variants={{ hover: { x: 30, scale: 1.1 } }}
@@ -310,6 +308,7 @@ const About = () => {
             </motion.div>
           </div>
         </motion.a>
+        </div>
       </section>
     </div>
   );

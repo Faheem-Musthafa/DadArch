@@ -45,11 +45,23 @@ const AnimatedRoutes = () => {
   );
 };
 
+const LayoutWrapper = ({ children }) => {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  return (
+    <div className={isHome ? 'main-content main-content--home' : 'main-content'}>
+      {children}
+    </div>
+  );
+};
+
 export default function App() {
   return (
     <Router>
       <Navbar />
-      <AnimatedRoutes />
+      <LayoutWrapper>
+        <AnimatedRoutes />
+      </LayoutWrapper>
     </Router>
   );
 }

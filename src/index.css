@@ -197,3 +197,16 @@ h3 {
     display: none !important;
   }
 }
+
+/* Layout wrapper to prevent overlap with fixed vertical sidebar navbar on desktop */
+.main-content {
+  width: 100%;
+  min-height: 100vh;
+}
+
+@media (min-width: 769px) {
+  .main-content:not(.main-content--home) {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+  }
+}

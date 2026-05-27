@@ -68,7 +68,7 @@ const Blog = () => {
         url="/blog"
       />
 
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '38vh 5% 10vh' : '25vh 5% 15vh' }}>
+      <div style={{ maxWidth: '1400px', margin: isMobile ? '0 auto' : '0', padding: isMobile ? '38vh 5% 10vh' : '25vh 5% 15vh' }}>
         <section className="blog-hero" style={{ marginBottom: isMobile ? '10vh' : '15vh' }}>
           <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--text-secondary)', display: 'block', marginBottom: '2rem' }}>
             Journal

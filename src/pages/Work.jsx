@@ -69,7 +69,7 @@ const Work = () => {
   const selectedProject = projects.find(p => p.id === selectedId);
 
   return (
-    <div ref={rootRef} style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', minHeight: '100vh', width: '100vw', overflowX: 'hidden' }}>
+    <div ref={rootRef} style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
       <SEO
         title="Works — DAD Architects"
         description="A curated archive of spaces designed with absolute intention."
@@ -84,7 +84,7 @@ const Work = () => {
       <section style={{ padding: '0 5% 35vh' }}>
         <div style={{
           maxWidth: '1600px',
-          margin: '0 auto',
+          margin: isMobile ? '0 auto' : '0',
           display: 'grid',
           gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
           gridAutoRows: isMobile ? '65vw' : '450px',

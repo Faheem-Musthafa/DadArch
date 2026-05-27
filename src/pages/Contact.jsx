@@ -130,7 +130,7 @@ const Contact = () => {
         url="/contact"
       />
 
-      <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '0 5%', width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ maxWidth: '1600px', margin: isMobile ? '0 auto' : '0', padding: '0 5%', width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
 
         {/* HERO SECTION */}
         <section style={{ height: '70vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
@@ -282,7 +282,7 @@ const Contact = () => {
       </div>
 
       {/* FOOTER */}
-      <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '0 5%', width: '100%' }}>
+      <div style={{ maxWidth: '1600px', margin: isMobile ? '0 auto' : '0', padding: '0 5%', width: '100%' }}>
         <LineReveal />
         <div style={{
           display: 'flex',
