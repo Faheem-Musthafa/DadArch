@@ -223,34 +223,66 @@ const Work = () => {
               <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
 
-                {/* ASYMMETRICAL GALLERY */}
+                {/* BENTO GRID GALLERY */}
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
-                  style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(12, 1fr)', gap: '1rem' }}
+                  style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', 
+                    gridAutoRows: isMobile ? '45vw' : '350px',
+                    gridAutoFlow: 'dense',
+                    gap: '1rem' 
+                  }}
                 >
                   {selectedProject.gallery.map((imgRaw, idx) => {
                     const imgUrl = typeof imgRaw === 'string' ? imgRaw : (imgRaw?.image || '');
-                    // Create an asymmetrical layout for gallery images
-                    let gridColumn = 'span 12';
+                    
+                    let gridSpan = {};
                     if (!isMobile) {
-                      if (idx === 0) gridColumn = '1 / 9'; // Large left
-                      else if (idx === 1) gridColumn = '9 / -1'; // Tall right
-                      else if (idx === 2) gridColumn = '3 / 11'; // Centered wide
+                      // Perfect 4x3 tight-packed grid pattern
+                      const pattern = idx % 6;
+                      switch (pattern) {
+                        case 0: gridSpan = { gridColumn: 'span 2', gridRow: 'span 2' }; break; // Large 2x2
+                        case 1: gridSpan = { gridColumn: 'span 2', gridRow: 'span 1' }; break; // Wide 2x1
+                        case 2: gridSpan = { gridColumn: 'span 1', gridRow: 'span 1' }; break; // Small 1x1
+                        case 3: gridSpan = { gridColumn: 'span 1', gridRow: 'span 2' }; break; // Tall 1x2
+                        case 4: gridSpan = { gridColumn: 'span 1', gridRow: 'span 1' }; break; // Small 1x1
+                        case 5: gridSpan = { gridColumn: 'span 2', gridRow: 'span 1' }; break; // Wide 2x1
+                        default: gridSpan = { gridColumn: 'span 1', gridRow: 'span 1' }; break;
+                      }
+                    } else {
+                      // Perfect 2x5 tight-packed grid pattern
+                      const pattern = idx % 5;
+                      switch (pattern) {
+                        case 0: gridSpan = { gridColumn: 'span 2', gridRow: 'span 2' }; break; // Large 2x2
+                        case 1: gridSpan = { gridColumn: 'span 1', gridRow: 'span 1' }; break; // Small 1x1
+                        case 2: gridSpan = { gridColumn: 'span 1', gridRow: 'span 1' }; break; // Small 1x1
+                        case 3: gridSpan = { gridColumn: 'span 2', gridRow: 'span 1' }; break; // Wide 2x1
+                        case 4: gridSpan = { gridColumn: 'span 2', gridRow: 'span 1' }; break; // Wide 2x1
+                        default: gridSpan = { gridColumn: 'span 1', gridRow: 'span 1' }; break;
+                      }
                     }
-
+                    
                     return (
                       <div
                         key={`${idx}-${imgUrl}`}
                         style={{
-                          gridColumn,
-                          aspectRatio: isMobile ? '4/3' : (idx === 1 ? '3/4' : '16/9'),
-                          overflow: 'hidden',
-                          backgroundColor: '#f5f5f5'
+                          ...gridSpan,
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: '#f5f5f5',
+                          overflow: 'hidden'
                         }}
                       >
-                        <img src={imgUrl} alt={`Gallery ${idx + 1}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img 
+                          src={imgUrl} 
+                          alt={`Gallery ${idx + 1}`} 
+                          loading="lazy" 
+                          decoding="async" 
+                          style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} 
+                        />
                       </div>
                     );
                   })}

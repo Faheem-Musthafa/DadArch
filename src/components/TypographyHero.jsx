@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Phone, ChatCircle } from '@phosphor-icons/react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -10,21 +10,12 @@ gsap.registerPlugin(useGSAP);
 const WORDS = [
   {
     id: '1', letter: 'D', remainder: 'ERIVING',
-    title: '01 // THOUGHTFUL',
-    desc: 'Formulating spatial narratives that respond to environment and human needs. We sculpt ideas into tangible footprints.',
-    tags: ['CONCEPTUALIZATION', 'MASTER PLANNING', '3D VISUALIZATION'],
   },
   {
     id: '2', letter: 'A', remainder: 'RCHITECTURAL',
-    title: '02 // RESPONSIVE',
-    desc: 'Engineering aesthetics. Bridging materials, light, and gravity to construct timeless monolithic forms.',
-    tags: ['STRUCTURAL DESIGN', 'FACADE ENGINEERING', 'SPATIAL DYNAMICS'],
   },
   {
     id: '3', letter: 'D', remainder: 'IMENSIONS',
-    title: '03 // SUSTAINABLE',
-    desc: 'Obsessive precision. Curating raw textures and refining every micro-interaction within the built space.',
-    tags: ['INTERIOR CURATION', 'MATERIAL SELECTION', 'FURNITURE DESIGN'],
   },
 ];
 
@@ -57,7 +48,7 @@ const sectionStyle = {
 const TypographyHero = () => {
   const [active, setActive] = useState(null);
   const isMobile = useIsMobile(768);
-  const activeWord = WORDS.find((w) => w.id === active);
+
   const heroRef = useRef(null);
 
   useGSAP(() => {
@@ -152,60 +143,22 @@ const TypographyHero = () => {
           zIndex: 2,
         }}
       >
-        <AnimatePresence mode="wait">
-          {activeWord ? (
-            <motion.div
-              key={activeWord.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr 1fr',
-                gap: '2rem',
-                width: '100%',
-                maxWidth: '1200px',
-                borderTop: '1px solid var(--text-primary)',
-                paddingTop: '1.5rem',
-                textAlign: 'left',
-                color: 'var(--text-primary)',
-              }}
-            >
-              <span style={{ fontSize: isMobile ? '0.75rem' : '0.65rem', fontWeight: 700, letterSpacing: '2px', opacity: 0.5 }}>
-                {activeWord.title}
-              </span>
-              <p style={{ margin: 0, fontSize: isMobile ? '1rem' : '0.85rem', fontWeight: 600, lineHeight: 1.6, textTransform: 'uppercase', maxWidth: '400px' }}>
-                {activeWord.desc}
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                {activeWord.tags.map((tag) => (
-                  <span key={tag} style={{ fontSize: isMobile ? '0.7rem' : '0.6rem', fontWeight: 700, letterSpacing: '1px', opacity: 0.8 }}>
-                    + {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ) : (
-            <motion.span
-              key="idle"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              style={{
-                fontSize: '0.65rem',
-                fontWeight: 700,
-                letterSpacing: '4px',
-                color: 'var(--text-primary)',
-                opacity: 0.4,
-                textTransform: 'uppercase',
-                paddingTop: '1.5rem',
-              }}
-            >
-              {isMobile ? 'Tap each letter to explore' : 'Hover over letters to explore'}
-            </motion.span>
-          )}
-        </AnimatePresence>
+        <motion.span
+          className="hero-meta"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          style={{
+            fontSize: '0.65rem',
+            fontWeight: 700,
+            letterSpacing: '4px',
+            color: 'var(--text-primary)',
+            opacity: 0.4,
+            textTransform: 'uppercase',
+            paddingTop: '1.5rem',
+          }}
+        >
+          {isMobile ? 'Tap each letter to explore' : 'Hover over letters to explore'}
+        </motion.span>
       </div>
 
       {isMobile && (

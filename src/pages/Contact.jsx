@@ -175,34 +175,28 @@ const Contact = () => {
 
                   <div>
                     <span style={{ fontSize: '1rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '1.5rem' }}>
-                      Locations
+                      Location
                     </span>
-                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '2rem' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
-                        <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1.1rem', lineHeight: 1.5, opacity: 0.8, margin: 0 }}>
-                          Calicut, Kerala
-                        </address>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1.1rem', lineHeight: 1.5, opacity: 0.8, margin: 0 }}>
+                        Calicut &amp; Manjeri, Kerala
+                      </address>
+                      <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem' }}>
                         <motion.a
                           href="https://www.google.com/maps/place/DAD+ARCHITECTS/@11.3043372,75.772696,17z/data=!3m1!4b1!4m6!3m5!1s0x3ba65f0067c96d35:0x9259c0f8fea93738!8m2!3d11.3043372!4d75.772696!16s%2Fg%2F11nc0wvrdq?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D"
                           target="_blank" rel="noopener noreferrer"
                           whileHover={{ x: 5, color: '#666' }}
                           style={{ fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#000', textDecoration: 'underline', textUnderlineOffset: '4px', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', transition: 'color 0.3s ease' }}
                         >
-                          View on Map ↗
+                          Calicut ↗
                         </motion.a>
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
-                        <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1.1rem', lineHeight: 1.5, opacity: 0.8, margin: 0 }}>
-                          City Point Mall, Karuvambram<br />
-                          Manjeri, Kerala
-                        </address>
                         <motion.a
                           href="https://www.google.com/maps?vet=10CAAQoqAOahcKEwiw1Oyav7GUAxUAAAAAHQAAAAAQFA..i&pvq=Cg0vZy8xMXZsN2tybG1zIhQKDmRhZCBhcmNoaXRlY3RzEAIYAw&lqi=ChhkYWQgYXJjaGl0ZWN0cyBsb2NhdGlvbnNI-JTv-Mi6gIAIWiQQABABGAAYARgCIhhkYWQgYXJjaGl0ZWN0cyBsb2NhdGlvbnOSARBjb3Jwb3JhdGVfb2ZmaWNl&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=in&sa=X&ftid=0x3ba6372590ba9ec3:0xce8c468489e39055"
                           target="_blank" rel="noopener noreferrer"
                           whileHover={{ x: 5, color: '#666' }}
                           style={{ fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#000', textDecoration: 'underline', textUnderlineOffset: '4px', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', transition: 'color 0.3s ease' }}
                         >
-                          View on Map ↗
+                          Manjeri ↗
                         </motion.a>
                       </div>
                     </div>
