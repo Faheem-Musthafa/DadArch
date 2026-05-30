@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, ChatCircle } from '@phosphor-icons/react';
 import gsap from 'gsap';
@@ -50,6 +50,24 @@ const TypographyHero = () => {
   const isMobile = useIsMobile(768);
 
   const heroRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (active !== null) {
+        const clickedLetterButton = event.target.closest('.hero-letter');
+        if (!clickedLetterButton) {
+          setActive(null);
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [active]);
 
   useGSAP(() => {
     const letters = gsap.utils.toArray('.hero-letter');

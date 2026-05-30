@@ -89,15 +89,26 @@ const About = () => {
         <section className="about-hero" style={{ height: '85vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
           <FadeIn>
             <h1 style={{
+              display: 'inline-flex',
+              flexDirection: 'column',
+              width: isMobile ? '100%' : 'max-content',
               fontSize: isMobile ? 'clamp(2.5rem, 8vw, 4rem)' : 'clamp(3rem, 5vw, 5.5rem)',
-              fontWeight: 300,
-              lineHeight: 0.85,
+              fontWeight: 600,
+              lineHeight: 0.9,
               letterSpacing: '-0.02em',
               margin: 0,
               textTransform: 'uppercase'
             }}>
-              {about.heroTitle && <>{about.heroTitle}<br /></>}
-              <span style={{ fontWeight: 600 }}>{about.heroSubtitle}</span>
+              {about.heroSubtitle && about.heroSubtitle.split(',').map((word, idx) => {
+                const cleanWord = word.replace(/[^a-zA-Z]/g, '').trim().toUpperCase();
+                return (
+                  <span key={idx} style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    {cleanWord.split('').map((char, charIdx) => (
+                      <span key={charIdx}>{char}</span>
+                    ))}
+                  </span>
+                );
+              })}
             </h1>
           </FadeIn>
         </section>
