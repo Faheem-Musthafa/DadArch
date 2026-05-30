@@ -115,6 +115,7 @@ h3 {
 .navbar-logo {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: max-content;
 }
 
@@ -130,13 +131,12 @@ h3 {
 .navbar-logo-sub {
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0;
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
   margin-top: 0.4rem;
   opacity: 0.4;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
   white-space: nowrap;
+  text-align: center;
 }
 
 .navbar-nav {

@@ -16,9 +16,7 @@ const Navbar = () => {
       <div className="navbar-left">
         <Link to="/" className="navbar-logo">
           <span className="navbar-logo-dad">DAD</span>
-          <span className="navbar-logo-sub">
-            {'ARCHITECTS'.split('').map((char, index) => <span key={index}>{char}</span>)}
-          </span>
+          <span className="navbar-logo-sub">ARCHITECTS</span>
         </Link>
         <nav className="navbar-nav">
           <Link to="/work" className="navbar-link">WORKS</Link>
