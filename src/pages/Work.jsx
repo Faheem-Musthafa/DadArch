@@ -243,7 +243,7 @@ const Work = () => {
                   >
                     {selectedProject.title}
                   </motion.h2>
-                  {(selectedProject.subtitle || selectedProject.desc) && (
+                  {selectedProject.subtitle && (
                     <motion.p
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 0.9, y: 0 }}
@@ -259,7 +259,7 @@ const Work = () => {
                         textTransform: 'none'
                       }}
                     >
-                      {selectedProject.subtitle || selectedProject.desc}
+                      {selectedProject.subtitle}
                     </motion.p>
                   )}
                 </motion.div>
@@ -267,58 +267,44 @@ const Work = () => {
             </div>
 
             {/* ARTICLE CONTENT */}
-            <div style={{ padding: isMobile ? '10vh 5%' : '15vh 5%' }}>
+            <div style={{ padding: isMobile ? '8vh 5%' : '12vh 5%' }}>
               <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
-                {/* PROJECT DESCRIPTION AND DETAILS */}
-                {(selectedProject.desc || selectedProject.subtitle || selectedProject.details.area || selectedProject.details.year || selectedProject.details.role) && (
+                {/* PROJECT DESCRIPTION */}
+                {selectedProject.desc && (
                   <div style={{
+                    borderTop: '1px solid rgba(0,0,0,0.1)',
+                    paddingTop: '3rem',
+                    marginBottom: '8vh',
                     display: 'grid',
-                    gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr',
-                    gap: isMobile ? '3rem' : '10%',
-                    marginBottom: '10vh',
-                    alignItems: 'start'
+                    gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr',
+                    gap: isMobile ? '2rem' : '4rem',
                   }}>
-                    {/* Description */}
                     <div>
-                      {selectedProject.subtitle && (
-                        <h3 style={{ fontSize: 'clamp(1.4rem, 2vw, 2rem)', fontWeight: 500, lineHeight: 1.4, margin: '0 0 1.5rem 0', textTransform: 'uppercase' }}>
-                          {selectedProject.subtitle}
-                        </h3>
-                      )}
-                      {selectedProject.desc && (
-                        <p style={{ fontSize: 'clamp(1.1rem, 1.3vw, 1.4rem)', lineHeight: 1.6, opacity: 0.8, margin: 0, whiteSpace: 'pre-wrap' }}>
-                          {selectedProject.desc}
-                        </p>
-                      )}
+                      <span style={{
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        letterSpacing: '3px',
+                        textTransform: 'uppercase',
+                        color: 'var(--text-secondary)',
+                        display: 'block',
+                      }}>
+                        Project Narrative
+                      </span>
                     </div>
-
-                    {/* Metadata Grid */}
-                    <div style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(2, 1fr)',
-                      gap: '2.5rem',
-                      borderTop: '1px solid rgba(0,0,0,0.1)',
-                      paddingTop: '2rem'
-                    }}>
-                      {selectedProject.details.year && (
-                        <div>
-                          <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.4, display: 'block', marginBottom: '0.5rem' }}>Year</span>
-                          <span style={{ fontSize: '1.1rem', fontWeight: 500 }}>{selectedProject.details.year}</span>
-                        </div>
-                      )}
-                      {selectedProject.details.area && (
-                        <div>
-                          <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.4, display: 'block', marginBottom: '0.5rem' }}>Area</span>
-                          <span style={{ fontSize: '1.1rem', fontWeight: 500 }}>{selectedProject.details.area}</span>
-                        </div>
-                      )}
-                      {selectedProject.details.role && (
-                        <div style={{ gridColumn: 'span 2' }}>
-                          <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.4, display: 'block', marginBottom: '0.5rem' }}>Scope</span>
-                          <span style={{ fontSize: '1.1rem', fontWeight: 500 }}>{selectedProject.details.role}</span>
-                        </div>
-                      )}
+                    <div>
+                      <p style={{
+                        fontSize: 'clamp(1.15rem, 1.4vw, 1.6rem)',
+                        lineHeight: 1.6,
+                        fontWeight: 400,
+                        color: 'var(--text-primary)',
+                        margin: 0,
+                        whiteSpace: 'pre-wrap',
+                        letterSpacing: '-0.01em',
+                        maxWidth: '55ch',
+                      }}>
+                        {selectedProject.desc}
+                      </p>
                     </div>
                   </div>
                 )}
