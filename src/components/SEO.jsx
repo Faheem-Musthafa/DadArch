@@ -9,15 +9,15 @@ const calicut = {
   name: 'DAD Architects — Calicut',
   image: DEFAULT_IMAGE,
   url: SITE_URL,
-  telephone: '+919995881828',
+  telephone: '+9196282281828',
   priceRange: '$$$',
   areaServed: 'Kerala, India',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Door No: 1720, 7th Floor, HiLite Business Park, Phase 1',
+    streetAddress: 'Edakkad Junction, Behind Meitra Hospital, East Hill',
     addressLocality: 'Calicut',
     addressRegion: 'Kerala',
-    postalCode: '673014',
+    postalCode: '673005',
     addressCountry: 'IN',
   },
   sameAs: [
@@ -33,7 +33,7 @@ const manjeri = {
   name: 'DAD Architects — Manjeri',
   image: DEFAULT_IMAGE,
   url: SITE_URL,
-  telephone: '+919995881828',
+  telephone: '+9196282281828',
   priceRange: '$$$',
   areaServed: 'Kerala, India',
   address: {

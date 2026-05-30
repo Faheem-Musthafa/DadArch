@@ -136,7 +136,7 @@ const Contact = () => {
         <section style={{ height: '70vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
           <FadeIn>
             <h1 style={{
-              fontSize: 'clamp(3.5rem, 12vw, 11rem)',
+              fontSize: isMobile ? 'clamp(3rem, 10vw, 6rem)' : 'clamp(3.5rem, 7vw, 9rem)',
               fontWeight: 800,
               lineHeight: 0.85,
               letterSpacing: '-0.03em',
@@ -180,7 +180,8 @@ const Contact = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
                         <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1.1rem', lineHeight: 1.5, opacity: 0.8, margin: 0 }}>
-                          Calicut, Kerala
+                          Edakkad Junction, Behind Meitra Hospital<br />
+                          East Hill, Calicut, Kerala 673005
                         </address>
                         <motion.a
                           href="https://www.google.com/maps/place/DAD+ARCHITECTS/@11.3043372,75.772696,17z/data=!3m1!4b1!4m6!3m5!1s0x3ba65f0067c96d35:0x9259c0f8fea93738!8m2!3d11.3043372!4d75.772696!16s%2Fg%2F11nc0wvrdq?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D"

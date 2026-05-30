@@ -232,7 +232,14 @@ const Work = () => {
                 <motion.div layoutId={`title-container-${selectedProject.id}`}>
                   <motion.h2
                     layoutId={`title-${selectedProject.id}`}
-                    style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', fontWeight: 800, margin: 0, letterSpacing: '-0.03em', lineHeight: 1, textTransform: 'uppercase' }}
+                    style={{
+                      fontSize: isMobile ? 'clamp(2.5rem, 8vw, 4.5rem)' : 'clamp(3rem, 5.5vw, 6rem)',
+                      fontWeight: 800,
+                      margin: 0,
+                      letterSpacing: '-0.03em',
+                      lineHeight: 1,
+                      textTransform: 'uppercase'
+                    }}
                   >
                     {selectedProject.title}
                   </motion.h2>

@@ -50,8 +50,8 @@ The studio is a collective of **creative thinkers, makers, and doers**, includin
 ### 5. Contact Information
 
 #### Calicut Office
-*   **Address**: Door No: 1720, 7th Floor, HiLite Business Park Phase 1, Calicut.
-*   **Phone**: +91 99958 81828
+*   **Address**: Edakkad Junction, Behind Meitra Hospital, East Hill, Calicut 673005.
+*   **Phone**: +91 962822 81828
 *   **Email**: [info@dadarchitects.com](mailto:info@dadarchitects.com)
 
 #### Manjeri Office

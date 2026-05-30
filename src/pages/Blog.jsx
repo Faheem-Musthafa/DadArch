@@ -74,7 +74,7 @@ const Blog = () => {
             Journal
           </span>
           <h1 style={{
-            fontSize: 'clamp(3rem, 9vw, 8rem)',
+            fontSize: isMobile ? 'clamp(2.5rem, 9vw, 5rem)' : 'clamp(3rem, 6vw, 7rem)',
             fontWeight: 300,
             lineHeight: 0.9,
             letterSpacing: '-0.03em',

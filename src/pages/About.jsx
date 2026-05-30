@@ -89,7 +89,7 @@ const About = () => {
         <section className="about-hero" style={{ height: '85vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
           <FadeIn>
             <h1 style={{
-              fontSize: 'clamp(3.5rem, 10vw, 9rem)',
+              fontSize: isMobile ? 'clamp(3rem, 9vw, 5rem)' : 'clamp(3.5rem, 6vw, 7rem)',
               fontWeight: 300,
               lineHeight: 0.85,
               letterSpacing: '-0.02em',
@@ -290,7 +290,7 @@ const About = () => {
             <motion.h2
               variants={{ hover: { x: 30 } }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontSize: 'clamp(4rem, 12vw, 14rem)', fontWeight: 800, textTransform: 'uppercase', margin: 0, lineHeight: 0.85, letterSpacing: '-0.03em' }}
+              style={{ fontSize: isMobile ? 'clamp(3.5rem, 12vw, 8rem)' : 'clamp(4rem, 8vw, 12rem)', fontWeight: 800, textTransform: 'uppercase', margin: 0, lineHeight: 0.85, letterSpacing: '-0.03em' }}
             >
               Start A<br />Project
             </motion.h2>

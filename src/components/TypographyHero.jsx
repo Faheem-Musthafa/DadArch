@@ -67,7 +67,7 @@ const TypographyHero = () => {
     position: 'relative',
     display: 'flex',
     flexDirection: isMobile ? 'column' : 'row',
-    fontSize: isMobile ? 'clamp(2.5rem, 10vw, 4rem)' : 'clamp(4.5rem, 18vw, 18rem)',
+    fontSize: isMobile ? 'clamp(2.5rem, 10vw, 4rem)' : 'clamp(4.5rem, 12vw, 15rem)',
     fontWeight: 800,
     color: 'var(--text-primary)',
     lineHeight: 1.1,
@@ -113,7 +113,7 @@ const TypographyHero = () => {
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
                   display: 'inline-flex',
-                  fontSize: isMobile ? 'clamp(2.5rem, 10vw, 4rem)' : 'clamp(3rem, 9vw, 10rem)',
+                  fontSize: isMobile ? 'clamp(2.5rem, 10vw, 4rem)' : 'clamp(3rem, 6.5vw, 8.5rem)',
                   fontWeight: 300,
                   letterSpacing: '-0.02em',
                   alignSelf: 'center',
@@ -177,7 +177,7 @@ const TypographyHero = () => {
           }}
         >
           <a
-            href="https://wa.me/919995881828"
+            href="https://wa.me/9196282281828"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
@@ -197,7 +197,7 @@ const TypographyHero = () => {
             <ChatCircle size={22} weight="fill" />
           </a>
           <a
-            href="tel:+919995881828"
+            href="tel:+9196282281828"
             aria-label="Call"
             style={{
               display: 'flex',
