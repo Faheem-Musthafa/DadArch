@@ -273,39 +273,20 @@ const Work = () => {
                 {/* PROJECT DESCRIPTION */}
                 {selectedProject.desc && (
                   <div style={{
-                    borderTop: '1px solid rgba(0,0,0,0.1)',
-                    paddingTop: '3rem',
-                    marginBottom: '8vh',
-                    display: 'grid',
-                    gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr',
-                    gap: isMobile ? '2rem' : '4rem',
+                    marginBottom: '6vh',
+                    maxWidth: '800px',
                   }}>
-                    <div>
-                      <span style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        letterSpacing: '3px',
-                        textTransform: 'uppercase',
-                        color: 'var(--text-secondary)',
-                        display: 'block',
-                      }}>
-                        Project Narrative
-                      </span>
-                    </div>
-                    <div>
-                      <p style={{
-                        fontSize: 'clamp(1.15rem, 1.4vw, 1.6rem)',
-                        lineHeight: 1.6,
-                        fontWeight: 400,
-                        color: 'var(--text-primary)',
-                        margin: 0,
-                        whiteSpace: 'pre-wrap',
-                        letterSpacing: '-0.01em',
-                        maxWidth: '55ch',
-                      }}>
-                        {selectedProject.desc}
-                      </p>
-                    </div>
+                    <p style={{
+                      fontSize: 'clamp(1.1rem, 1.3vw, 1.4rem)',
+                      lineHeight: 1.6,
+                      fontWeight: 400,
+                      color: 'var(--text-primary)',
+                      margin: 0,
+                      whiteSpace: 'pre-wrap',
+                      opacity: 0.8
+                    }}>
+                      {selectedProject.desc}
+                    </p>
                   </div>
                 )}
 
