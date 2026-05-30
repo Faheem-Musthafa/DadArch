@@ -38,7 +38,10 @@ const FadeIn = ({ children, delay = 0 }) => (
 const Work = () => {
   const isMobile = useIsMobile(768);
   const [selectedId, setSelectedId] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
   const rootRef = useRef(null);
+
+  const selectedProject = projects.find(p => p.id === selectedId);
 
   useGSAP(() => {
     const cards = gsap.utils.toArray('.work-card');
@@ -60,13 +63,29 @@ const Work = () => {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
+      setLightboxIndex(null);
       gsap.set('.work-card', { opacity: 1 });
       requestAnimationFrame(() => ScrollTrigger.refresh());
     }
     return () => { document.body.style.overflow = 'auto'; };
   }, [selectedId]);
 
-  const selectedProject = projects.find(p => p.id === selectedId);
+  useEffect(() => {
+    if (lightboxIndex === null || !selectedProject) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setLightboxIndex(null);
+      if (e.key === 'ArrowLeft') {
+        setLightboxIndex((prev) => (prev === 0 ? selectedProject.gallery.length - 1 : prev - 1));
+      }
+      if (e.key === 'ArrowRight') {
+        setLightboxIndex((prev) => (prev === selectedProject.gallery.length - 1 ? 0 : prev + 1));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex, selectedProject]);
 
   return (
     <div ref={rootRef} style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
@@ -177,7 +196,10 @@ const Work = () => {
           >
             {/* CLOSE BUTTON */}
             <motion.button
-              onClick={() => setSelectedId(null)}
+              onClick={() => {
+                setSelectedId(null);
+                setLightboxIndex(null);
+              }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -214,6 +236,25 @@ const Work = () => {
                   >
                     {selectedProject.title}
                   </motion.h2>
+                  {(selectedProject.subtitle || selectedProject.desc) && (
+                    <motion.p
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 0.9, y: 0 }}
+                      transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      style={{
+                        fontSize: 'clamp(1rem, 1.5vw, 1.8rem)',
+                        fontWeight: 300,
+                        margin: '1.5rem 0 0 0',
+                        maxWidth: '50ch',
+                        lineHeight: 1.4,
+                        letterSpacing: '-0.01em',
+                        color: 'rgba(255, 255, 255, 0.85)',
+                        textTransform: 'none'
+                      }}
+                    >
+                      {selectedProject.subtitle || selectedProject.desc}
+                    </motion.p>
+                  )}
                 </motion.div>
               </div>
             </div>
@@ -222,6 +263,58 @@ const Work = () => {
             <div style={{ padding: isMobile ? '10vh 5%' : '15vh 5%' }}>
               <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
+                {/* PROJECT DESCRIPTION AND DETAILS */}
+                {(selectedProject.desc || selectedProject.subtitle || selectedProject.details.area || selectedProject.details.year || selectedProject.details.role) && (
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr',
+                    gap: isMobile ? '3rem' : '10%',
+                    marginBottom: '10vh',
+                    alignItems: 'start'
+                  }}>
+                    {/* Description */}
+                    <div>
+                      {selectedProject.subtitle && (
+                        <h3 style={{ fontSize: 'clamp(1.4rem, 2vw, 2rem)', fontWeight: 500, lineHeight: 1.4, margin: '0 0 1.5rem 0', textTransform: 'uppercase' }}>
+                          {selectedProject.subtitle}
+                        </h3>
+                      )}
+                      {selectedProject.desc && (
+                        <p style={{ fontSize: 'clamp(1.1rem, 1.3vw, 1.4rem)', lineHeight: 1.6, opacity: 0.8, margin: 0, whiteSpace: 'pre-wrap' }}>
+                          {selectedProject.desc}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Metadata Grid */}
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(2, 1fr)',
+                      gap: '2.5rem',
+                      borderTop: '1px solid rgba(0,0,0,0.1)',
+                      paddingTop: '2rem'
+                    }}>
+                      {selectedProject.details.year && (
+                        <div>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.4, display: 'block', marginBottom: '0.5rem' }}>Year</span>
+                          <span style={{ fontSize: '1.1rem', fontWeight: 500 }}>{selectedProject.details.year}</span>
+                        </div>
+                      )}
+                      {selectedProject.details.area && (
+                        <div>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.4, display: 'block', marginBottom: '0.5rem' }}>Area</span>
+                          <span style={{ fontSize: '1.1rem', fontWeight: 500 }}>{selectedProject.details.area}</span>
+                        </div>
+                      )}
+                      {selectedProject.details.role && (
+                        <div style={{ gridColumn: 'span 2' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.4, display: 'block', marginBottom: '0.5rem' }}>Scope</span>
+                          <span style={{ fontSize: '1.1rem', fontWeight: 500 }}>{selectedProject.details.role}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 {/* BENTO GRID GALLERY */}
                 <motion.div
@@ -266,24 +359,31 @@ const Work = () => {
                     }
                     
                     return (
-                      <div
+                      <motion.div
                         key={`${idx}-${imgUrl}`}
+                        onClick={() => setLightboxIndex(idx)}
+                        whileHover="hover"
+                        variants={{ hover: { scale: 0.995 } }}
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                         style={{
                           ...gridSpan,
                           width: '100%',
                           height: '100%',
                           backgroundColor: '#f5f5f5',
-                          overflow: 'hidden'
+                          overflow: 'hidden',
+                          cursor: 'pointer'
                         }}
                       >
-                        <img 
+                        <motion.img 
                           src={imgUrl} 
                           alt={`Gallery ${idx + 1}`} 
                           loading="lazy" 
                           decoding="async" 
+                          variants={{ hover: { scale: 1.04 } }}
+                          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                           style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} 
                         />
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </motion.div>
@@ -315,6 +415,145 @@ const Work = () => {
                   </motion.a>
                 </div>
               </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* LIGHTBOX MODAL */}
+        {lightboxIndex !== null && selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.95)',
+              zIndex: 20000,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              userSelect: 'none'
+            }}
+            onClick={() => setLightboxIndex(null)}
+          >
+            {/* CLOSE BUTTON */}
+            <button
+              onClick={() => setLightboxIndex(null)}
+              style={{
+                position: 'absolute',
+                top: '2rem',
+                right: '2rem',
+                background: 'none',
+                border: 'none',
+                color: '#fff',
+                cursor: 'pointer',
+                padding: '1rem',
+                zIndex: 20001
+              }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
+            {/* PREVIOUS BUTTON */}
+            {selectedProject.gallery.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex((prev) => (prev === 0 ? selectedProject.gallery.length - 1 : prev - 1));
+                }}
+                style={{
+                  position: 'absolute',
+                  left: '2rem',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  zIndex: 20001,
+                  transition: 'background-color 0.3s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.15)'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)'}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+            )}
+
+            {/* NEXT BUTTON */}
+            {selectedProject.gallery.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex((prev) => (prev === selectedProject.gallery.length - 1 ? 0 : prev + 1));
+                }}
+                style={{
+                  position: 'absolute',
+                  right: '2rem',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  zIndex: 20001,
+                  transition: 'background-color 0.3s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.15)'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)'}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            )}
+
+            {/* IMAGE */}
+            <motion.img
+              key={lightboxIndex}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              src={typeof selectedProject.gallery[lightboxIndex] === 'string' 
+                ? selectedProject.gallery[lightboxIndex] 
+                : (selectedProject.gallery[lightboxIndex]?.image || '')}
+              alt={`Gallery Full View ${lightboxIndex + 1}`}
+              style={{
+                maxWidth: '90%',
+                maxHeight: '85vh',
+                objectFit: 'contain',
+                boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
+              }}
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            {/* COUNTER */}
+            <div style={{
+              position: 'absolute',
+              bottom: '2rem',
+              color: '#fff',
+              fontSize: '0.85rem',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              opacity: 0.6
+            }}>
+              {lightboxIndex + 1} / {selectedProject.gallery.length}
             </div>
           </motion.div>
         )}

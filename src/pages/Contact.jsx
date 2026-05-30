@@ -72,7 +72,7 @@ const Contact = () => {
     setStatus('submitting');
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/info@dadarchitects.com", {
+      const response = await fetch("https://formsubmit.co/ajax/admin@dadarchitects.com", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -164,11 +164,11 @@ const Contact = () => {
                       Studio
                     </span>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: 'clamp(1.2rem, 2vw, 1.5rem)', fontWeight: 400 }}>
-                      <motion.a href="mailto:info@dadarchitects.com" whileHover={{ x: 10, color: '#666' }} style={{ textDecoration: 'none', color: '#000', width: 'max-content', transition: 'color 0.3s ease' }}>
-                        info@dadarchitects.com
+                      <motion.a href="mailto:admin@dadarchitects.com" whileHover={{ x: 10, color: '#666' }} style={{ textDecoration: 'none', color: '#000', width: 'max-content', transition: 'color 0.3s ease' }}>
+                        admin@dadarchitects.com
                       </motion.a>
-                      <motion.a href="tel:+919995881828" whileHover={{ x: 10, color: '#666' }} style={{ textDecoration: 'none', color: '#000', width: 'max-content', transition: 'color 0.3s ease' }}>
-                        +91 99958 81828
+                      <motion.a href="tel:+916282281828" whileHover={{ x: 10, color: '#666' }} style={{ textDecoration: 'none', color: '#000', width: 'max-content', transition: 'color 0.3s ease' }}>
+                        +91 6282 281 828
                       </motion.a>
                     </div>
                   </div>

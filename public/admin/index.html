@@ -83,8 +83,13 @@
               { label: 'ID', name: 'id', widget: 'string', hint: 'Two-digit string, e.g. "07"' },
               { label: 'Order', name: 'order', widget: 'number', value_type: 'int', min: 1, default: 1 },
               { label: 'Title', name: 'title', widget: 'string' },
+              { label: 'Subtitle / Cover Description', name: 'subtitle', widget: 'string', required: false, hint: 'A short description shown under the title on the cover screen. Optional.' },
+              { label: 'Area', name: 'area', widget: 'string', required: false, hint: 'Project area (e.g., "3500 SQ FT"). Optional.' },
+              { label: 'Year', name: 'year', widget: 'string', required: false, hint: 'Project completion year (e.g., "2024"). Optional.' },
+              { label: 'Scope / Role', name: 'role', widget: 'string', required: false, hint: 'Project scope/role (e.g., "Architecture & Interior"). Optional.' },
               { label: 'Main image', name: 'img', widget: 'image' },
               { label: 'Gallery', name: 'gallery', widget: 'list', field: { label: 'Image', name: 'image', widget: 'image' } },
+              { label: 'Body (Detailed Description)', name: 'body', widget: 'markdown', required: false, hint: 'Detailed narrative/story of the project. Optional.' },
             ],
           },
           {
