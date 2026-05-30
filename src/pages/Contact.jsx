@@ -136,15 +136,17 @@ const Contact = () => {
         <section style={{ height: '70vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
           <FadeIn>
             <h1 style={{
-              fontSize: isMobile ? 'clamp(3rem, 10vw, 6rem)' : 'clamp(3.5rem, 7vw, 9rem)',
+              fontSize: isMobile ? 'clamp(2.2rem, 7.5vw, 3.8rem)' : 'clamp(3rem, 4.5vw, 5.5rem)',
               fontWeight: 800,
-              lineHeight: 0.85,
+              lineHeight: 0.95,
               letterSpacing: '-0.03em',
               margin: 0,
               textTransform: 'uppercase'
             }}>
-              Let's Build<br />
-              <span style={{ fontWeight: 300 }}>The Future.</span>
+              Every Great Design<br />
+              Begins with a<br />
+              <span style={{ fontWeight: 300 }}>Conversation.</span><br />
+              <span style={{ fontWeight: 300, opacity: 0.6 }}>Let's Talk.</span>
             </h1>
           </FadeIn>
         </section>

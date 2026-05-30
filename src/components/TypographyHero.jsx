@@ -177,7 +177,7 @@ const TypographyHero = () => {
           }}
         >
           <a
-            href="https://wa.me/9196282281828"
+            href="https://wa.me/916282281828"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
