@@ -1,5 +1,5 @@
 ---
-heroTitle: DAD Architects
+heroTitle: ""
 heroSubtitle: Thoughtful, Responsive, Sustainable
 studioParagraph: We believe architecture is more than creating buildings; it
   shapes the way people live, feel, and connect with the world around them. We

@@ -133,7 +133,7 @@ const Contact = () => {
       <div style={{ maxWidth: '1600px', margin: isMobile ? '0 auto' : '0', padding: '0 5%', width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
 
         {/* HERO SECTION */}
-        <section style={{ height: '70vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
+        <section style={{ minHeight: '70vh', paddingTop: '20vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
           <FadeIn>
             <h1 style={{
               fontSize: isMobile ? 'clamp(2.2rem, 7.5vw, 3.8rem)' : 'clamp(3rem, 4.5vw, 5.5rem)',
@@ -162,10 +162,10 @@ const Contact = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
 
                   <div>
-                    <span style={{ fontSize: '1rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '1.5rem' }}>
+                    <span style={{ fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem', opacity: 0.6 }}>
                       Studio
                     </span>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: 'clamp(1.2rem, 2vw, 1.5rem)', fontWeight: 400 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: 'clamp(1rem, 1.5vw, 1.2rem)', fontWeight: 400 }}>
                       <motion.a href="mailto:admin@dadarchitects.com" whileHover={{ x: 10, color: '#666' }} style={{ textDecoration: 'none', color: '#000', width: 'max-content', transition: 'color 0.3s ease' }}>
                         admin@dadarchitects.com
                       </motion.a>
@@ -176,12 +176,12 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <span style={{ fontSize: '1rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '1.5rem' }}>
+                    <span style={{ fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem', opacity: 0.6 }}>
                       Locations
                     </span>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
-                        <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1.1rem', lineHeight: 1.5, opacity: 0.8, margin: 0 }}>
+                        <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1rem', lineHeight: 1.6, margin: 0 }}>
                           Edakkad Junction, Behind Meitra Hospital<br />
                           East Hill, Calicut, Kerala 673005
                         </address>
@@ -195,9 +195,9 @@ const Contact = () => {
                         </motion.a>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
-                        <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1.1rem', lineHeight: 1.5, opacity: 0.8, margin: 0 }}>
+                        <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1rem', lineHeight: 1.6, margin: 0 }}>
                           City Point Mall, Karuvambram<br />
-                          Manjeri, Kerala
+                          Manjeri, Kerala 676121
                         </address>
                         <motion.a
                           href="https://www.google.com/maps?vet=10CAAQoqAOahcKEwiw1Oyav7GUAxUAAAAAHQAAAAAQFA..i&pvq=Cg0vZy8xMXZsN2tybG1zIhQKDmRhZCBhcmNoaXRlY3RzEAIYAw&lqi=ChhkYWQgYXJjaGl0ZWN0cyBsb2NhdGlvbnNI-JTv-Mi6gIAIWiQQABABGAAYARgCIhhkYWQgYXJjaGl0ZWN0cyBsb2NhdGlvbnOSARBjb3Jwb3JhdGVfb2ZmaWNl&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=in&sa=X&ftid=0x3ba6372590ba9ec3:0xce8c468489e39055"

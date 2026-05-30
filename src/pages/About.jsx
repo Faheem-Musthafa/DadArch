@@ -89,14 +89,14 @@ const About = () => {
         <section className="about-hero" style={{ height: '85vh', display: 'flex', alignItems: 'flex-end', paddingBottom: '10vh' }}>
           <FadeIn>
             <h1 style={{
-              fontSize: isMobile ? 'clamp(3rem, 9vw, 5rem)' : 'clamp(3.5rem, 6vw, 7rem)',
+              fontSize: isMobile ? 'clamp(2.5rem, 8vw, 4rem)' : 'clamp(3rem, 5vw, 5.5rem)',
               fontWeight: 300,
               lineHeight: 0.85,
               letterSpacing: '-0.02em',
               margin: 0,
               textTransform: 'uppercase'
             }}>
-              {about.heroTitle}<br />
+              {about.heroTitle && <>{about.heroTitle}<br /></>}
               <span style={{ fontWeight: 600 }}>{about.heroSubtitle}</span>
             </h1>
           </FadeIn>
@@ -108,7 +108,7 @@ const About = () => {
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(12, 1fr)', gap: '2rem', marginTop: '3rem' }}>
             <div style={{ gridColumn: isMobile ? '1' : '1 / 4' }}>
               <FadeIn>
-                <span style={{ fontSize: '1.1rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em' }}>
+                <span style={{ fontSize: '1.3rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em' }}>
                   The Studio
                 </span>
               </FadeIn>
@@ -167,8 +167,7 @@ const About = () => {
                         style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', filter: 'grayscale(100%)' }}
                       />
                     </div>
-                    <h3 style={{ fontSize: '1.5rem', fontWeight: 500, margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>{f.name}</h3>
-                    <p style={{ margin: 0, color: 'var(--text-secondary)' }}>{f.role}</p>
+                    <h3 style={{ fontSize: '1.5rem', fontWeight: 500, margin: '0', textTransform: 'uppercase', textAlign: 'center' }}>{f.name}</h3>
                   </FadeIn>
                 ))}
               </div>
@@ -286,28 +285,31 @@ const About = () => {
             style={{ textDecoration: 'none', color: 'inherit', display: 'block', padding: '10vh 0' }}
             whileHover="hover"
           >
-          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between' }}>
-            <motion.h2
-              variants={{ hover: { x: 30 } }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontSize: isMobile ? 'clamp(3.5rem, 12vw, 8rem)' : 'clamp(4rem, 8vw, 12rem)', fontWeight: 800, textTransform: 'uppercase', margin: 0, lineHeight: 0.85, letterSpacing: '-0.03em' }}
-            >
-              Start A<br />Project
-            </motion.h2>
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between' }}>
+              <motion.h2
+                variants={{ hover: { x: 30 } }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                style={{ fontSize: isMobile ? 'clamp(3rem, 10vw, 5.5rem)' : 'clamp(3.5rem, 7vw, 9rem)', fontWeight: 800, textTransform: 'uppercase', margin: 0, lineHeight: 0.85, letterSpacing: '-0.03em', display: 'flex', flexDirection: 'column', width: 'max-content' }}
+              >
+                <span style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                  {'Start A'.split('').map((char, index) => <span key={index}>{char === ' ' ? '\u00A0' : char}</span>)}
+                </span>
+                <span>Project</span>
+              </motion.h2>
 
-            <motion.div
-              variants={{ hover: { x: 30, scale: 1.1 } }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              style={{ marginTop: isMobile ? '3rem' : 0, paddingRight: isMobile ? 0 : '5%' }}
-            >
-              {/* Huge thin arrow */}
-              <svg width={isMobile ? "80" : "160"} height={isMobile ? "80" : "160"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <polyline points="15 5 22 12 15 19"></polyline>
-              </svg>
-            </motion.div>
-          </div>
-        </motion.a>
+              <motion.div
+                variants={{ hover: { x: 30, scale: 1.1 } }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                style={{ marginTop: isMobile ? '3rem' : 0, paddingRight: isMobile ? 0 : '5%' }}
+              >
+                {/* Huge thin arrow */}
+                <svg width={isMobile ? "80" : "160"} height={isMobile ? "80" : "160"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'translateX(-2px)' }}>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <polyline points="15 5 22 12 15 19"></polyline>
+                </svg>
+              </motion.div>
+            </div>
+          </motion.a>
         </div>
       </section>
     </div>

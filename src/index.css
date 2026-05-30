@@ -16,13 +16,16 @@
 /* ============================================================
    RESET & BASE
    ============================================================ */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-body);
@@ -33,7 +36,10 @@ html, body {
 }
 
 /* Ensure form elements and buttons inherit the font */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font-family: inherit;
 }
 
@@ -94,7 +100,8 @@ h3 {
   pointer-events: none;
 }
 
-.navbar-left, .navbar-taglines {
+.navbar-left,
+.navbar-taglines {
   pointer-events: auto;
 }
 
@@ -116,6 +123,8 @@ h3 {
   font-weight: 800;
   line-height: 0.8;
   letter-spacing: -0.02em;
+  margin-right: 0.02em;
+  white-space: nowrap;
 }
 
 .navbar-logo-sub {
@@ -124,8 +133,10 @@ h3 {
   letter-spacing: 0;
   margin-top: 0.4rem;
   opacity: 0.4;
-  text-align-last: justify;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  white-space: nowrap;
 }
 
 .navbar-nav {
@@ -184,13 +195,16 @@ h3 {
   .navbar {
     padding: 2rem 6%;
   }
-  
+
   .navbar-left {
     gap: 2rem;
   }
 
   .navbar-logo-dad {
     font-size: 2.2rem;
+    letter-spacing: -0.02em;
+    margin-right: 0.02em;
+    white-space: nowrap;
   }
 
   .hide-mobile {
