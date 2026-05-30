@@ -201,14 +201,22 @@ h3 {
   }
 
   .navbar-logo-dad {
-    font-size: 2.2rem;
+    font-size: 2.8rem;
     letter-spacing: -0.02em;
     margin-right: 0.02em;
     white-space: nowrap;
   }
 
   .navbar-logo-sub {
-    font-size: 0.55rem;
+    font-size: 0.7rem;
+  }
+
+  .navbar-nav {
+    gap: 0.25rem;
+  }
+
+  .navbar-link {
+    font-size: 0.75rem;
   }
 
   .hide-mobile {

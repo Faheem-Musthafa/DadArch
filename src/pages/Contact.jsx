@@ -145,8 +145,8 @@ const Contact = () => {
             }}>
               Every Great Design<br />
               Begins with a<br />
-              <span style={{ fontWeight: 300 }}>Conversation.</span><br />
-              <span style={{ fontWeight: 300, opacity: 0.6 }}>Let's Talk.</span>
+              <span style={{ fontWeight: 300 }}>Conversation.</span>
+              <span style={{ display: 'block', marginTop: isMobile ? '1.5rem' : '2.5rem', fontWeight: 300, opacity: 0.6 }}>Let's Talk.</span>
             </h1>
           </FadeIn>
         </section>
@@ -162,7 +162,7 @@ const Contact = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
 
                   <div>
-                    <span style={{ fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem', opacity: 0.6 }}>
+                    <span style={{ fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>
                       Studio
                     </span>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: 'clamp(1rem, 1.5vw, 1.2rem)', fontWeight: 400 }}>
@@ -176,7 +176,7 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <span style={{ fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem', opacity: 0.6 }}>
+                    <span style={{ fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>
                       Locations
                     </span>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
@@ -196,7 +196,7 @@ const Contact = () => {
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
                         <address style={{ fontStyle: 'normal', color: '#000', fontSize: '1rem', lineHeight: 1.6, margin: 0 }}>
-                          City Point Mall, Karuvambram<br />
+                          City Point Mall, Thurakkal<br />
                           Manjeri, Kerala 676121
                         </address>
                         <motion.a

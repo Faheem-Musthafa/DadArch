@@ -63,7 +63,7 @@ const Work = () => {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
-      setLightboxIndex(null);
+      setTimeout(() => setLightboxIndex(null), 0);
       gsap.set('.work-card', { opacity: 1 });
       requestAnimationFrame(() => ScrollTrigger.refresh());
     }

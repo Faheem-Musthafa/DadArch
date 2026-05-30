@@ -97,7 +97,8 @@ const About = () => {
               lineHeight: 0.9,
               letterSpacing: '-0.02em',
               margin: 0,
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              color: 'var(--text-secondary)'
             }}>
               {about.heroSubtitle && about.heroSubtitle.split(',').map((word, idx) => {
                 const cleanWord = word.replace(/[^a-zA-Z]/g, '').trim().toUpperCase();
@@ -128,9 +129,9 @@ const About = () => {
             <div style={{ gridColumn: isMobile ? '1' : '5 / 11' }}>
               <FadeIn delay={0.1}>
                 <p style={{
-                  fontSize: 'clamp(1.5rem, 1vw, 2.5rem)',
+                  fontSize: 'clamp(1.1rem, 1.4vw, 1.4rem)',
                   fontWeight: 400,
-                  lineHeight: 1.3,
+                  lineHeight: 1.55,
                   margin: '0 0 4rem 0',
                   letterSpacing: '-0.01em'
                 }}>
