@@ -2,12 +2,12 @@
 id: "01"
 order: 1
 title: Thirumangalam Residence
-img: /uploads/42-copy.webp
+img: /uploads/tr1.webp
 gallery:
-  - /uploads/1.webp
-  - /uploads/2.webp
-  - /uploads/3.webp
-  - /uploads/4.webp
-  - /uploads/5.webp
+  - /uploads/tr6.webp
+  - /uploads/tr5.webp
+  - /uploads/tr2.webp
+  - /uploads/tr3.webp
+  - /uploads/tr4.webp
 ---
 Testing , working anoo
