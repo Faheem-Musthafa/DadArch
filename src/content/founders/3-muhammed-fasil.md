@@ -1,6 +1,6 @@
 ---
-order: 1
-name: Adel backer
+order: 3
+name: Muhammed Fasil
 role: Founder
-image: /uploads/img-20260523-wa0090~2.webp
+image: /uploads/img_20250815_154635.webp
 ---

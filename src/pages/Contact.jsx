@@ -162,7 +162,7 @@ const Contact = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
 
                   <div>
-                    <span style={{ fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>
+                    <span style={{ fontSize: '1.25rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>
                       Studio
                     </span>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: 'clamp(1rem, 1.5vw, 1.2rem)', fontWeight: 400 }}>
@@ -176,7 +176,7 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <span style={{ fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>
+                    <span style={{ fontSize: '1.25rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>
                       Locations
                     </span>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
